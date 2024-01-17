@@ -1,9 +1,16 @@
 import React from 'react';
+import { Routes, Route } from 'react-router-dom';
+
+import Home from './pages/Home';
+import Bingo from './pages/Bingo';
 
 function App() {
   return (
     <div>
-      <h1>hello world</h1>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/bingo/:codeId" element={<Bingo />} />
+      </Routes>
     </div>
   );
 }
