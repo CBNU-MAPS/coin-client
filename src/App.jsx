@@ -2,7 +2,7 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 
 import Home from './pages/Home';
-import Bingo from './pages/Bingo';
+import Bingo from './pages/Bingo/Bingo';
 
 function App() {
   return (
