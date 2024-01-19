@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 
 import Home from './pages/Home';
 import Bingo from './pages/Bingo/Bingo';
+import './styles/font.scss';
 
 function App() {
   return (
