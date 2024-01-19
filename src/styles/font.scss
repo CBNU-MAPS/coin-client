@@ -1,0 +1,25 @@
+@font-face {
+    font-family: "Pretendard-Bold";
+    src: url("../assets/font/Pretendard-Bold.woff") format("woff");
+    font-weight: 700;
+}
+
+@font-face {
+    font-family: "Pretendard-Medium";
+    src: url("../assets/font/Pretendard-Medium.woff") format("woff");
+    font-weight: 500;
+}
+
+@each $px in (26, 32, 42) {
+    .bold#{$px} {
+        font-family: "Pretendard-Bold";
+        font-size: #{$px}px;
+    }
+}
+
+@each $px in (18, 24) {
+    .medium#{$px} {
+        font-family: "Pretendard-Medium";
+        font-size: #{$px}px;
+    }
+}
