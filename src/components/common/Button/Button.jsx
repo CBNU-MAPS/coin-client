@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 
 import style from './Button.module.scss';
 
-function Button({ text }) {
+function Button({ text, handleClick }) {
   return (
-    <button type="button" className={`${style.button} bold26`}>
+    <button type="button" className={`${style.button} bold26`} onClick={handleClick}>
       {text}
     </button>
   );
@@ -13,6 +13,7 @@ function Button({ text }) {
 
 Button.propTypes = {
   text: PropTypes.string.isRequired,
+  handleClick: PropTypes.func.isRequired,
 };
 
 export default Button;

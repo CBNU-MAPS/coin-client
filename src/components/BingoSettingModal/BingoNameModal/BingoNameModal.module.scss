@@ -1,0 +1,43 @@
+@import '../../../styles/color.scss';
+
+.modal {
+  display: flex;
+  width: 350px;
+  height: 241px;
+  flex-direction: column;
+  align-items: center;
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: 5px 5px 20px 5px lightgrey;
+}
+
+.modalTitle {
+  height: 44px;
+  margin-top: 60px;
+  text-align: center;
+}
+
+.modalInput {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 213px;
+  height: 56px;
+  margin-top: 17px;
+  border: none;
+  border-radius: 50px;
+  padding: 0 25px;
+  background-color: $input-default;
+  outline-color: $primary;
+}
+
+.nextButton {
+  display: flex;
+  justify-content: end;
+  margin-top: 25px;
+  width: 280px;
+  button {
+    width: 20px;
+    height: 20px;
+  }
+}
