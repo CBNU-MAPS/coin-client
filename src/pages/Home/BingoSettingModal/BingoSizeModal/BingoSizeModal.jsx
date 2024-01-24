@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import style from './BingoSizeModal.module.scss';
 import NextIcon from '../../../../Icons/NextIcon';
 import PrevIcon from '../../../../Icons/PrevIcon';
+import PlusIcon from '../../../../Icons/PlusIcon';
+import MinusIcon from '../../../../Icons/MinusIcon';
 
 function BingoSizeModal({
   bingoSize,
@@ -35,12 +37,18 @@ function BingoSizeModal({
     <div className={`${style.modal}`}>
       <div className={`${style.modalTitle} bold32`}>빙고 SIZE</div>
       <div className={`${style.modalInput}`}>
-        <button type="button" className="bold42" onClick={handleMinusButton}>
-          -
+        <button
+          type="button"
+          aria-label="Minus Button"
+          onClick={handleMinusButton}>
+          <MinusIcon />
         </button>
         <div className="bold32">{bingoSize}</div>
-        <button type="button" className="bold42" onClick={handlePlusButton}>
-          +
+        <button
+          type="button"
+          aria-label="Plus Button"
+          onClick={handlePlusButton}>
+          <PlusIcon />{' '}
         </button>
       </div>
       <div className={`${style.buttons}`}>

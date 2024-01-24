@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import style from './BingoHeadCountModal.module.scss';
 import NextIcon from '../../../../Icons/NextIcon';
 import PrevIcon from '../../../../Icons/PrevIcon';
+import PlusIcon from '../../../../Icons/PlusIcon';
+import MinusIcon from '../../../../Icons/MinusIcon';
 
 function BingoHeadCountModal({
   bingoHeadCount,
@@ -38,12 +40,18 @@ function BingoHeadCountModal({
     <div className={`${style.modal}`}>
       <div className={`${style.modalTitle} bold32`}>인원 수(2~10)</div>
       <div className={`${style.modalInput}`}>
-        <button type="button" className="bold42" onClick={handleMinusButton}>
-          -
+        <button
+          type="button"
+          aria-label="Minus Button"
+          onClick={handleMinusButton}>
+          <MinusIcon />
         </button>
         <div className="bold32">{bingoHeadCount}</div>
-        <button type="button" className="bold42" onClick={handlePlusButton}>
-          +
+        <button
+          type="button"
+          aria-label="Plus Button"
+          onClick={handlePlusButton}>
+          <PlusIcon />{' '}
         </button>
       </div>
       <div className={`${style.buttons}`}>
