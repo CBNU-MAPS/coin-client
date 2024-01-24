@@ -1,4 +1,4 @@
-@import '../../../styles/color.scss';
+@import '../../../../styles/color.scss';
 
 .modal {
   display: flex;
@@ -34,10 +34,12 @@
 .nextButton {
   display: flex;
   justify-content: end;
-  margin-top: 25px;
-  width: 280px;
+  margin-top: 15px;
+  width: 300px;
   button {
-    width: 20px;
-    height: 20px;
+    width: 35px;
+    height: 35px;
+    border: none;
+    background-color: white;
   }
 }
