@@ -20,7 +20,20 @@ function Home() {
   };
 
   const closeModal = () => {
+    setBingoName('');
+    setBingoHeadCount(2);
+    setBingoSize(3);
     setIsModalOpen(false);
+  };
+
+  const createBingo = () => {
+    const bingoInfo = {
+      bingoName,
+      bingoHeadCount,
+      bingoSize,
+    };
+    console.log(bingoInfo);
+    // TODO: fetch BingoInfo to server
   };
 
   return (
@@ -37,6 +50,9 @@ function Home() {
           setBingoName={setBingoName}
           bingoHeadCount={bingoHeadCount}
           setBingoHeadCount={setBingoHeadCount}
+          bingoSize={bingoSize}
+          setBingoSize={setBingoSize}
+          createBingo={createBingo}
         />
       )}
     </div>
