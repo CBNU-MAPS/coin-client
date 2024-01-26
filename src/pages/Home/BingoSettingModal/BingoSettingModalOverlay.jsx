@@ -5,23 +5,19 @@ import BingoNameModal from './BingoNameModal/BingoNameModal';
 import style from './BingoSettingModalOverlay.module.scss';
 import BingoHeadCountModal from './BingoHeadCountModal/BingoHeadCountModal';
 import BingoSizeModal from './BingoSizeModal/BingoSizeModal';
+import useBingoInfoStore from '../../../stores/bingoInfoStore';
 
-function BingoSettingModalOverlay({
-  closeModal,
-  bingoName,
-  setBingoName,
-  bingoHeadCount,
-  setBingoHeadCount,
-  bingoSize,
-  setBingoSize,
-  createBingo,
-}) {
+function BingoSettingModalOverlay({ setIsModalOpen }) {
+  const { setBingoName, setBingoHeadCount, setBingoSize } = useBingoInfoStore();
   const [modalType, setModalType] = useState('bingoName');
   const modalOverlay = useRef(null);
 
-  const outsideClick = (event) => {
+  const closeModal = (event) => {
     if (event.target === modalOverlay.current) {
-      closeModal();
+      setBingoName('');
+      setBingoHeadCount(2);
+      setBingoSize(3);
+      setIsModalOpen(false);
     }
   };
 
@@ -29,44 +25,24 @@ function BingoSettingModalOverlay({
     <div
       className={`${style.modalOverlay}`}
       ref={modalOverlay}
-      onClick={outsideClick}
-      onKeyDown={outsideClick}
+      onClick={closeModal}
+      onKeyDown={closeModal}
       role="presentation">
       {modalType === 'bingoName' && (
-        <BingoNameModal
-          bingoName={bingoName}
-          setBingoName={setBingoName}
-          setModalType={setModalType}
-        />
+        <BingoNameModal setModalType={setModalType} />
       )}
       {modalType === 'bingoHeadCount' && (
-        <BingoHeadCountModal
-          bingoHeadCount={bingoHeadCount}
-          setBingoHeadCount={setBingoHeadCount}
-          setModalType={setModalType}
-        />
+        <BingoHeadCountModal setModalType={setModalType} />
       )}
       {modalType === 'bingoSize' && (
-        <BingoSizeModal
-          bingoSize={bingoSize}
-          setBingoSize={setBingoSize}
-          setModalType={setModalType}
-          handleNextButton={createBingo}
-        />
+        <BingoSizeModal setModalType={setModalType} />
       )}
     </div>
   );
 }
 
 BingoSettingModalOverlay.propTypes = {
-  closeModal: PropTypes.func.isRequired,
-  bingoName: PropTypes.string.isRequired,
-  setBingoName: PropTypes.func.isRequired,
-  bingoHeadCount: PropTypes.number.isRequired,
-  setBingoHeadCount: PropTypes.func.isRequired,
-  bingoSize: PropTypes.number.isRequired,
-  setBingoSize: PropTypes.func.isRequired,
-  createBingo: PropTypes.func.isRequired,
+  setIsModalOpen: PropTypes.func.isRequired,
 };
 
 export default BingoSettingModalOverlay;

@@ -6,13 +6,12 @@ import NextIcon from '../../../../Icons/NextIcon';
 import PrevIcon from '../../../../Icons/PrevIcon';
 import PlusIcon from '../../../../Icons/PlusIcon';
 import MinusIcon from '../../../../Icons/MinusIcon';
+import useBingoInfoStore from '../../../../stores/bingoInfoStore';
 
-function BingoSizeModal({
-  bingoSize,
-  setBingoSize,
-  setModalType,
-  handleNextButton,
-}) {
+function BingoSizeModal({ setModalType }) {
+  const { bingoName, bingoHeadCount, bingoSize, setBingoSize } =
+    useBingoInfoStore();
+
   const handleMinusButton = () => {
     if (bingoSize === 3) {
       alert('최소 3 x 3 이상이어야 합니다.');
@@ -31,6 +30,16 @@ function BingoSizeModal({
 
   const handlePrevButton = () => {
     setModalType('bingoHeadCount');
+  };
+
+  const createBingo = () => {
+    // eslint-disable-next-line
+    const bingoInfo = {
+      bingoName,
+      bingoHeadCount,
+      bingoSize,
+    };
+    // TODO: fetch BingoInfo to server
   };
 
   return (
@@ -58,10 +67,7 @@ function BingoSizeModal({
           onClick={handlePrevButton}>
           <PrevIcon />
         </button>
-        <button
-          type="button"
-          aria-label="Next Button"
-          onClick={handleNextButton}>
+        <button type="button" aria-label="Next Button" onClick={createBingo}>
           <NextIcon />
         </button>
       </div>
@@ -70,10 +76,7 @@ function BingoSizeModal({
 }
 
 BingoSizeModal.propTypes = {
-  bingoSize: PropTypes.number.isRequired,
-  setBingoSize: PropTypes.func.isRequired,
   setModalType: PropTypes.func.isRequired,
-  handleNextButton: PropTypes.func.isRequired,
 };
 
 export default BingoSizeModal;
