@@ -6,10 +6,10 @@ import NextIcon from '../../../../Icons/NextIcon';
 import PrevIcon from '../../../../Icons/PrevIcon';
 import PlusIcon from '../../../../Icons/PlusIcon';
 import MinusIcon from '../../../../Icons/MinusIcon';
-import useBingoSettingStore from '../../../../stores/bingoSettingStore';
+import useBingoInfoStore from '../../../../stores/bingoInfoStore';
 
 function BingoHeadCountModal({ setModalType }) {
-  const { bingoHeadCount, setBingoHeadCount } = useBingoSettingStore();
+  const { bingoHeadCount, setBingoHeadCount } = useBingoInfoStore();
 
   const handleMinusButton = () => {
     if (bingoHeadCount === 2) {

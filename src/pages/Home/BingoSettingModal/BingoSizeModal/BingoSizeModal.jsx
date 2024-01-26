@@ -6,10 +6,11 @@ import NextIcon from '../../../../Icons/NextIcon';
 import PrevIcon from '../../../../Icons/PrevIcon';
 import PlusIcon from '../../../../Icons/PlusIcon';
 import MinusIcon from '../../../../Icons/MinusIcon';
-import useBingoSettingStore from '../../../../stores/bingoSettingStore';
+import useBingoInfoStore from '../../../../stores/bingoInfoStore';
 
-function BingoSizeModal({ setModalType, handleNextButton }) {
-  const { bingoSize, setBingoSize } = useBingoSettingStore();
+function BingoSizeModal({ setModalType }) {
+  const { bingoName, bingoHeadCount, bingoSize, setBingoSize } =
+    useBingoInfoStore();
 
   const handleMinusButton = () => {
     if (bingoSize === 3) {
@@ -29,6 +30,16 @@ function BingoSizeModal({ setModalType, handleNextButton }) {
 
   const handlePrevButton = () => {
     setModalType('bingoHeadCount');
+  };
+
+  const createBingo = () => {
+    // eslint-disable-next-line
+    const bingoInfo = {
+      bingoName,
+      bingoHeadCount,
+      bingoSize,
+    };
+    // TODO: fetch BingoInfo to server
   };
 
   return (
@@ -56,10 +67,7 @@ function BingoSizeModal({ setModalType, handleNextButton }) {
           onClick={handlePrevButton}>
           <PrevIcon />
         </button>
-        <button
-          type="button"
-          aria-label="Next Button"
-          onClick={handleNextButton}>
+        <button type="button" aria-label="Next Button" onClick={createBingo}>
           <NextIcon />
         </button>
       </div>
@@ -69,7 +77,6 @@ function BingoSizeModal({ setModalType, handleNextButton }) {
 
 BingoSizeModal.propTypes = {
   setModalType: PropTypes.func.isRequired,
-  handleNextButton: PropTypes.func.isRequired,
 };
 
 export default BingoSizeModal;

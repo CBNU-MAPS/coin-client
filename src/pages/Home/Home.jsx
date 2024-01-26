@@ -4,38 +4,12 @@ import Button from '../../components/Button/Button';
 import BingoSettingModalOverlay from './BingoSettingModal/BingoSettingModalOverlay';
 import CoinIcon from '../../Icons/CoinIcon';
 import style from './Home.module.scss';
-import useBingoSettingStore from '../../stores/bingoSettingStore';
 
 function Home() {
-  const {
-    bingoName,
-    setBingoName,
-    bingoHeadCount,
-    setBingoHeadCount,
-    bingoSize,
-    setBingoSize,
-  } = useBingoSettingStore();
-
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => {
     setIsModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setBingoName('');
-    setBingoHeadCount(2);
-    setBingoSize(3);
-    setIsModalOpen(false);
-  };
-
-  const createBingo = () => {
-    const bingoInfo = {
-      bingoName,
-      bingoHeadCount,
-      bingoSize,
-    };
-    // TODO: fetch BingoInfo to server
   };
 
   return (
@@ -50,10 +24,7 @@ function Home() {
       </div>
       <Button text="빙고 생성하기" handleClick={openModal} />
       {isModalOpen && (
-        <BingoSettingModalOverlay
-          closeModal={closeModal}
-          createBingo={createBingo}
-        />
+        <BingoSettingModalOverlay setIsModalOpen={setIsModalOpen} />
       )}
     </div>
   );

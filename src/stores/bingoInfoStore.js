@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-const useBingoSettingStore = create((set) => ({
+const useBingoInfoStore = create((set) => ({
   bingoName: '',
   setBingoName: (name) => set({ bingoName: name }),
   bingoHeadCount: 2,
@@ -9,4 +9,4 @@ const useBingoSettingStore = create((set) => ({
   setBingoSize: (size) => set({ bingoSize: size }),
 }));
 
-export default useBingoSettingStore;
+export default useBingoInfoStore;

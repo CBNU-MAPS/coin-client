@@ -5,14 +5,19 @@ import BingoNameModal from './BingoNameModal/BingoNameModal';
 import style from './BingoSettingModalOverlay.module.scss';
 import BingoHeadCountModal from './BingoHeadCountModal/BingoHeadCountModal';
 import BingoSizeModal from './BingoSizeModal/BingoSizeModal';
+import useBingoInfoStore from '../../../stores/bingoInfoStore';
 
-function BingoSettingModalOverlay({ closeModal, createBingo }) {
+function BingoSettingModalOverlay({ setIsModalOpen }) {
+  const { setBingoName, setBingoHeadCount, setBingoSize } = useBingoInfoStore();
   const [modalType, setModalType] = useState('bingoName');
   const modalOverlay = useRef(null);
 
-  const outsideClick = (event) => {
+  const closeModal = (event) => {
     if (event.target === modalOverlay.current) {
-      closeModal();
+      setBingoName('');
+      setBingoHeadCount(2);
+      setBingoSize(3);
+      setIsModalOpen(false);
     }
   };
 
@@ -20,8 +25,8 @@ function BingoSettingModalOverlay({ closeModal, createBingo }) {
     <div
       className={`${style.modalOverlay}`}
       ref={modalOverlay}
-      onClick={outsideClick}
-      onKeyDown={outsideClick}
+      onClick={closeModal}
+      onKeyDown={closeModal}
       role="presentation">
       {modalType === 'bingoName' && (
         <BingoNameModal setModalType={setModalType} />
@@ -30,18 +35,14 @@ function BingoSettingModalOverlay({ closeModal, createBingo }) {
         <BingoHeadCountModal setModalType={setModalType} />
       )}
       {modalType === 'bingoSize' && (
-        <BingoSizeModal
-          setModalType={setModalType}
-          handleNextButton={createBingo}
-        />
+        <BingoSizeModal setModalType={setModalType} />
       )}
     </div>
   );
 }
 
 BingoSettingModalOverlay.propTypes = {
-  closeModal: PropTypes.func.isRequired,
-  createBingo: PropTypes.func.isRequired,
+  setIsModalOpen: PropTypes.func.isRequired,
 };
 
 export default BingoSettingModalOverlay;
