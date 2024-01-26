@@ -4,14 +4,17 @@ import Button from '../../components/Button/Button';
 import BingoSettingModalOverlay from './BingoSettingModal/BingoSettingModalOverlay';
 import CoinIcon from '../../Icons/CoinIcon';
 import style from './Home.module.scss';
+import useBingoSettingStore from '../../stores/bingoSettingStore';
 
 function Home() {
-  // eslint-disable-next-line no-unused-vars
-  const [bingoName, setBingoName] = useState('');
-  // eslint-disable-next-line no-unused-vars
-  const [bingoHeadCount, setBingoHeadCount] = useState(2);
-  // eslint-disable-next-line no-unused-vars
-  const [bingoSize, setBingoSize] = useState(3);
+  const {
+    bingoName,
+    setBingoName,
+    bingoHeadCount,
+    setBingoHeadCount,
+    bingoSize,
+    setBingoSize,
+  } = useBingoSettingStore();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -32,7 +35,6 @@ function Home() {
       bingoHeadCount,
       bingoSize,
     };
-    console.log(bingoInfo);
     // TODO: fetch BingoInfo to server
   };
 
@@ -50,12 +52,6 @@ function Home() {
       {isModalOpen && (
         <BingoSettingModalOverlay
           closeModal={closeModal}
-          bingoName={bingoName}
-          setBingoName={setBingoName}
-          bingoHeadCount={bingoHeadCount}
-          setBingoHeadCount={setBingoHeadCount}
-          bingoSize={bingoSize}
-          setBingoSize={setBingoSize}
           createBingo={createBingo}
         />
       )}

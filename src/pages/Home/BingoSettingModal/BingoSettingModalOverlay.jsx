@@ -6,16 +6,7 @@ import style from './BingoSettingModalOverlay.module.scss';
 import BingoHeadCountModal from './BingoHeadCountModal/BingoHeadCountModal';
 import BingoSizeModal from './BingoSizeModal/BingoSizeModal';
 
-function BingoSettingModalOverlay({
-  closeModal,
-  bingoName,
-  setBingoName,
-  bingoHeadCount,
-  setBingoHeadCount,
-  bingoSize,
-  setBingoSize,
-  createBingo,
-}) {
+function BingoSettingModalOverlay({ closeModal, createBingo }) {
   const [modalType, setModalType] = useState('bingoName');
   const modalOverlay = useRef(null);
 
@@ -33,23 +24,13 @@ function BingoSettingModalOverlay({
       onKeyDown={outsideClick}
       role="presentation">
       {modalType === 'bingoName' && (
-        <BingoNameModal
-          bingoName={bingoName}
-          setBingoName={setBingoName}
-          setModalType={setModalType}
-        />
+        <BingoNameModal setModalType={setModalType} />
       )}
       {modalType === 'bingoHeadCount' && (
-        <BingoHeadCountModal
-          bingoHeadCount={bingoHeadCount}
-          setBingoHeadCount={setBingoHeadCount}
-          setModalType={setModalType}
-        />
+        <BingoHeadCountModal setModalType={setModalType} />
       )}
       {modalType === 'bingoSize' && (
         <BingoSizeModal
-          bingoSize={bingoSize}
-          setBingoSize={setBingoSize}
           setModalType={setModalType}
           handleNextButton={createBingo}
         />
@@ -60,12 +41,6 @@ function BingoSettingModalOverlay({
 
 BingoSettingModalOverlay.propTypes = {
   closeModal: PropTypes.func.isRequired,
-  bingoName: PropTypes.string.isRequired,
-  setBingoName: PropTypes.func.isRequired,
-  bingoHeadCount: PropTypes.number.isRequired,
-  setBingoHeadCount: PropTypes.func.isRequired,
-  bingoSize: PropTypes.number.isRequired,
-  setBingoSize: PropTypes.func.isRequired,
   createBingo: PropTypes.func.isRequired,
 };
 

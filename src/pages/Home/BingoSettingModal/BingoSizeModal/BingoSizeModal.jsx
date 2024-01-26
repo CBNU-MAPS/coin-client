@@ -6,13 +6,11 @@ import NextIcon from '../../../../Icons/NextIcon';
 import PrevIcon from '../../../../Icons/PrevIcon';
 import PlusIcon from '../../../../Icons/PlusIcon';
 import MinusIcon from '../../../../Icons/MinusIcon';
+import useBingoSettingStore from '../../../../stores/bingoSettingStore';
 
-function BingoSizeModal({
-  bingoSize,
-  setBingoSize,
-  setModalType,
-  handleNextButton,
-}) {
+function BingoSizeModal({ setModalType, handleNextButton }) {
+  const { bingoSize, setBingoSize } = useBingoSettingStore();
+
   const handleMinusButton = () => {
     if (bingoSize === 3) {
       alert('최소 3 x 3 이상이어야 합니다.');
@@ -70,8 +68,6 @@ function BingoSizeModal({
 }
 
 BingoSizeModal.propTypes = {
-  bingoSize: PropTypes.number.isRequired,
-  setBingoSize: PropTypes.func.isRequired,
   setModalType: PropTypes.func.isRequired,
   handleNextButton: PropTypes.func.isRequired,
 };

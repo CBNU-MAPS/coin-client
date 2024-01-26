@@ -6,12 +6,11 @@ import NextIcon from '../../../../Icons/NextIcon';
 import PrevIcon from '../../../../Icons/PrevIcon';
 import PlusIcon from '../../../../Icons/PlusIcon';
 import MinusIcon from '../../../../Icons/MinusIcon';
+import useBingoSettingStore from '../../../../stores/bingoSettingStore';
 
-function BingoHeadCountModal({
-  bingoHeadCount,
-  setBingoHeadCount,
-  setModalType,
-}) {
+function BingoHeadCountModal({ setModalType }) {
+  const { bingoHeadCount, setBingoHeadCount } = useBingoSettingStore();
+
   const handleMinusButton = () => {
     if (bingoHeadCount === 2) {
       alert('최소 2명 이상이어야 합니다.');
@@ -73,8 +72,6 @@ function BingoHeadCountModal({
 }
 
 BingoHeadCountModal.propTypes = {
-  bingoHeadCount: PropTypes.number.isRequired,
-  setBingoHeadCount: PropTypes.func.isRequired,
   setModalType: PropTypes.func.isRequired,
 };
 

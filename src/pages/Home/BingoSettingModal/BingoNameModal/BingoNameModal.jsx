@@ -3,8 +3,11 @@ import PropTypes from 'prop-types';
 
 import style from './BingoNameModal.module.scss';
 import NextIcon from '../../../../Icons/NextIcon';
+import useBingoSettingStore from '../../../../stores/bingoSettingStore';
 
-function BingoNameModal({ bingoName, setBingoName, setModalType }) {
+function BingoNameModal({ setModalType }) {
+  const { bingoName, setBingoName } = useBingoSettingStore();
+
   const inputChange = (event) => {
     setBingoName(event.target.value);
   };
@@ -38,8 +41,6 @@ function BingoNameModal({ bingoName, setBingoName, setModalType }) {
 }
 
 BingoNameModal.propTypes = {
-  bingoName: PropTypes.string.isRequired,
-  setBingoName: PropTypes.func.isRequired,
   setModalType: PropTypes.func.isRequired,
 };
 
