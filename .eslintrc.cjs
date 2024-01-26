@@ -24,5 +24,6 @@ module.exports = {
         useTabs: false,
       },
     ],
+    'no-alert': 'off',
   },
 };
