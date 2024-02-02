@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import style from './BingoSizeModal.module.scss';
@@ -7,10 +8,15 @@ import PrevIcon from '../../../../Icons/PrevIcon';
 import PlusIcon from '../../../../Icons/PlusIcon';
 import MinusIcon from '../../../../Icons/MinusIcon';
 import useBingoInfoStore from '../../../../stores/bingoInfoStore';
+import useQuestionStore from '../../../../stores/questionStore';
 
 function BingoSizeModal({ setModalType }) {
+  const navigate = useNavigate();
+
   const { bingoName, bingoHeadCount, bingoSize, setBingoSize } =
     useBingoInfoStore();
+
+  const { setQuestions } = useQuestionStore();
 
   const handleMinusButton = () => {
     if (bingoSize === 3) {
@@ -33,13 +39,29 @@ function BingoSizeModal({ setModalType }) {
   };
 
   const createBingo = () => {
-    // eslint-disable-next-line
     const bingoInfo = {
-      bingoName,
-      bingoHeadCount,
-      bingoSize,
+      name: bingoName,
+      personnel: bingoHeadCount,
+      size: bingoSize,
     };
-    // TODO: fetch BingoInfo to server
+
+    fetch(`${import.meta.env.VITE_BASE_URL}/room`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(bingoInfo),
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then(({ roomId, questions }) => {
+        setQuestions(questions);
+        navigate(`/bingo/${roomId}`, { state: { questions } });
+      })
+      .catch((error) => {
+        throw new Error(error);
+      });
   };
 
   return (
