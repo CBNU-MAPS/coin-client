@@ -1,0 +1,17 @@
+@import '../../../styles/color.scss';
+
+.bingoBoard {
+  display: flex;
+  flex-wrap: wrap;
+  width: 375px;
+  height: 375px;
+}
+
+.bingoCell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid $primary;
+  border-radius: 5px;
+  margin: auto;
+}

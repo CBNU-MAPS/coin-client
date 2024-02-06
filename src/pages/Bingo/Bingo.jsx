@@ -6,6 +6,7 @@ import { Client } from '@stomp/stompjs';
 import style from './Bingo.module.scss';
 import useBingoInfoStore from '../../stores/bingoInfoStore';
 import useQuestionStore from '../../stores/questionStore';
+import BingoBoard from './BingoBoard/BingoBoard';
 
 function Bingo() {
   const client = useRef({});
@@ -43,7 +44,11 @@ function Bingo() {
     return () => client.current.deactivate();
   }, [roomCode, setBingoHeadCount, setBingoName, setBingoSize, setQuestions]);
 
-  return <div className={`${style.test} bold26`}>빙고페이지 입니다.</div>;
+  return (
+    <div className={`${style.container} bold26`}>
+      <BingoBoard />
+    </div>
+  );
 }
 
 export default Bingo;
