@@ -3,8 +3,10 @@ import PropTypes from 'prop-types';
 
 import NextIcon from '../../../../Icons/NextIcon';
 import style from './UserNameModal.module.scss';
+import useUserInfoStore from '../../../../stores/userInfoStore';
 
-function UserNameModal({ userName, setUserName, setModalType }) {
+function UserNameModal({ setModalType }) {
+  const { userName, setUserName } = useUserInfoStore();
   const inputChange = (event) => {
     setUserName(event.target.value);
   };
@@ -38,8 +40,6 @@ function UserNameModal({ userName, setUserName, setModalType }) {
 }
 
 UserNameModal.propTypes = {
-  userName: PropTypes.string.isRequired,
-  setUserName: PropTypes.func.isRequired,
   setModalType: PropTypes.func.isRequired,
 };
 

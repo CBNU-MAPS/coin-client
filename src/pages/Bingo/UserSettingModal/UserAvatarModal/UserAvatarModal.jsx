@@ -1,14 +1,16 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import style from './UserAvatarModal.module.scss';
 import PrevIcon from '../../../../Icons/PrevIcon';
 import NextIcon from '../../../../Icons/NextIcon';
 import avatarMappingObject from '../../../../utils/avatarMappingObject';
+import useUserInfoStore from '../../../../stores/userInfoStore';
+import useUserAvatarStore from '../../../../stores/userAvatarStore';
 
-function UserAvatarModal({ userName, setModalType, setIsModalOpen }) {
-  const userAvatar = Array(10).fill(false);
-  const [avatar, setAvatar] = useState(10);
+function UserAvatarModal({ setModalType, setIsModalOpen }) {
+  const { userName, avatar, setAvatar } = useUserInfoStore();
+  const { userAvatar } = useUserAvatarStore();
 
   const handlePrevButton = () => {
     setModalType('userName');
@@ -22,6 +24,7 @@ function UserAvatarModal({ userName, setModalType, setIsModalOpen }) {
     if (avatar > 9) {
       alert('캐릭터를 선택해 주세요.');
     } else {
+      // eslint-disable-next-line
       console.log(userInfo);
       setIsModalOpen(false);
       // TODO: 소켓으로 서버로 userInfo 보내기
@@ -66,7 +69,6 @@ function UserAvatarModal({ userName, setModalType, setIsModalOpen }) {
 }
 
 UserAvatarModal.propTypes = {
-  userName: PropTypes.string.isRequired,
   setModalType: PropTypes.func.isRequired,
   setIsModalOpen: PropTypes.func.isRequired,
 };
