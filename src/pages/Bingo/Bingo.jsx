@@ -1,17 +1,18 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 // eslint-disable-next-line import/no-unresolved
 import { Client } from '@stomp/stompjs';
 
-import style from './Bingo.module.scss';
 import useBingoInfoStore from '../../stores/bingoInfoStore';
 import useQuestionStore from '../../stores/questionStore';
+import UserSettingModalOverlay from './UserSettingModal/UserSettingModalOverlay';
 
 function Bingo() {
   const client = useRef({});
   const location = useLocation();
 
   const roomCode = location.pathname.split('/')[2];
+  const [isModalOpen, setIsModalOpen] = useState(true);
   const { setBingoName, setBingoHeadCount, setBingoSize } = useBingoInfoStore();
   const { setQuestions } = useQuestionStore();
 
@@ -43,7 +44,13 @@ function Bingo() {
     return () => client.current.deactivate();
   }, [roomCode, setBingoHeadCount, setBingoName, setBingoSize, setQuestions]);
 
-  return <div className={`${style.test} bold26`}>빙고페이지 입니다.</div>;
+  return (
+    <div>
+      {isModalOpen && (
+        <UserSettingModalOverlay setIsModalOpen={setIsModalOpen} />
+      )}
+    </div>
+  );
 }
 
 export default Bingo;
