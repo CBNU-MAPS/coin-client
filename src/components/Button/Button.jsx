@@ -5,7 +5,10 @@ import style from './Button.module.scss';
 
 function Button({ text, handleClick }) {
   return (
-    <button type="button" className={`${style.button} bold26`} onClick={handleClick}>
+    <button
+      type="button"
+      className={`${style.button} bold26`}
+      onClick={handleClick}>
       {text}
     </button>
   );

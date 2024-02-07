@@ -55,9 +55,9 @@ function BingoSizeModal({ setModalType }) {
       .then((response) => {
         return response.json();
       })
-      .then(({ roomId, questions }) => {
+      .then(({ roomCode, questions }) => {
         setQuestions(questions);
-        navigate(`/bingo/${roomId}`, { state: { questions } });
+        navigate(`/bingo/${roomCode}`, { state: { questions } });
       })
       .catch((error) => {
         throw new Error(error);
