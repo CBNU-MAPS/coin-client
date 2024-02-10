@@ -8,15 +8,12 @@ import PrevIcon from '../../../../Icons/PrevIcon';
 import PlusIcon from '../../../../Icons/PlusIcon';
 import MinusIcon from '../../../../Icons/MinusIcon';
 import useBingoInfoStore from '../../../../stores/bingoInfoStore';
-import useQuestionStore from '../../../../stores/questionStore';
 
 function BingoSizeModal({ setModalType }) {
   const navigate = useNavigate();
 
   const { bingoName, bingoHeadCount, bingoSize, setBingoSize } =
     useBingoInfoStore();
-
-  const { setQuestions } = useQuestionStore();
 
   const handleMinusButton = () => {
     if (bingoSize === 3) {
@@ -55,9 +52,8 @@ function BingoSizeModal({ setModalType }) {
       .then((response) => {
         return response.json();
       })
-      .then(({ roomCode, questions }) => {
-        setQuestions(questions);
-        navigate(`/bingo/${roomCode}`, { state: { questions } });
+      .then(({ roomCode }) => {
+        navigate(`/bingo/${roomCode}`);
       })
       .catch((error) => {
         throw new Error(error);
