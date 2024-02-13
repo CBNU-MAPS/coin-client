@@ -27,7 +27,10 @@ function UserAvatarModal({ client, setModalType, setIsModalOpen }) {
       // eslint-disable-next-line
       console.log(userInfo);
       setIsModalOpen(false);
-      // TODO: 소켓으로 서버로 userInfo 보내기
+      client.current.publish({
+        destination: '/bingo/user',
+        body: JSON.stringify(userInfo),
+      });
     }
   };
 
