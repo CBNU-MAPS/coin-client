@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import style from './BingoSizeModal.module.scss';
@@ -9,6 +10,8 @@ import MinusIcon from '../../../../Icons/MinusIcon';
 import useBingoInfoStore from '../../../../stores/bingoInfoStore';
 
 function BingoSizeModal({ setModalType }) {
+  const navigate = useNavigate();
+
   const { bingoName, bingoHeadCount, bingoSize, setBingoSize } =
     useBingoInfoStore();
 
@@ -33,13 +36,28 @@ function BingoSizeModal({ setModalType }) {
   };
 
   const createBingo = () => {
-    // eslint-disable-next-line
     const bingoInfo = {
-      bingoName,
-      bingoHeadCount,
-      bingoSize,
+      name: bingoName,
+      personnel: bingoHeadCount,
+      size: bingoSize,
     };
-    // TODO: fetch BingoInfo to server
+
+    fetch(`${import.meta.env.VITE_BASE_URL}/room`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(bingoInfo),
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then(({ roomCode }) => {
+        navigate(`/bingo/${roomCode}`);
+      })
+      .catch((error) => {
+        throw new Error(error);
+      });
   };
 
   return (
