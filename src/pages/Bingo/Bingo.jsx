@@ -6,6 +6,7 @@ import { Client } from '@stomp/stompjs';
 import useBingoInfoStore from '../../stores/bingoInfoStore';
 import useQuestionStore from '../../stores/questionStore';
 import UserSettingModalOverlay from './UserSettingModal/UserSettingModalOverlay';
+import useUserAvatarStore from '../../stores/userAvatarStore';
 
 function Bingo() {
   const client = useRef({});
@@ -15,10 +16,11 @@ function Bingo() {
   const [isModalOpen, setIsModalOpen] = useState(true);
   const { setBingoName, setBingoHeadCount, setBingoSize } = useBingoInfoStore();
   const { setQuestions } = useQuestionStore();
+  const { setUserAvatar } = useUserAvatarStore();
 
   useEffect(() => {
     const subscribe = () => {
-      client.current.subscribe(`/room/${roomCode}`, (data) => {
+      client.current.subscribe(`/room/${roomCode}/room`, (data) => {
         const { bingoName, bingoSize, bingoHeadCount, questions } = JSON.parse(
           data.body,
         );
@@ -27,12 +29,20 @@ function Bingo() {
         setBingoSize(bingoSize);
         setQuestions(questions);
       });
+
+      client.current.subscribe(`/room/${roomCode}/avatar`, (data) => {
+        const { selectedAvatars } = JSON.parse(data.body);
+        setUserAvatar(selectedAvatars);
+      });
     };
 
     client.current = new Client({
       brokerURL: import.meta.env.VITE_BROKER_URL,
       connectHeaders: {
         code: roomCode,
+      },
+      debug: (d) => {
+        console.log(d);
       },
       onConnect: () => {
         subscribe();
@@ -47,7 +57,10 @@ function Bingo() {
   return (
     <div>
       {isModalOpen && (
-        <UserSettingModalOverlay setIsModalOpen={setIsModalOpen} />
+        <UserSettingModalOverlay
+          setIsModalOpen={setIsModalOpen}
+          client={client}
+        />
       )}
     </div>
   );

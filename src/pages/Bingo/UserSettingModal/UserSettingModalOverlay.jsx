@@ -5,7 +5,7 @@ import style from './UserSettingModalOverlay.module.scss';
 import UserNameModal from './UserNameModal/UserNameModal';
 import UserAvatarModal from './UserAvatarModal/UserAvatarModal';
 
-function UserSettingModalOverlay({ setIsModalOpen }) {
+function UserSettingModalOverlay({ client, setIsModalOpen }) {
   const [modalType, setModalType] = useState('userName');
 
   return (
@@ -16,6 +16,7 @@ function UserSettingModalOverlay({ setIsModalOpen }) {
         <UserAvatarModal
           setModalType={setModalType}
           setIsModalOpen={setIsModalOpen}
+          client={client}
         />
       )}
     </div>
@@ -23,6 +24,8 @@ function UserSettingModalOverlay({ setIsModalOpen }) {
 }
 
 UserSettingModalOverlay.propTypes = {
+  // eslint-disable-next-line react/forbid-prop-types
+  client: PropTypes.object.isRequired,
   setIsModalOpen: PropTypes.func.isRequired,
 };
 

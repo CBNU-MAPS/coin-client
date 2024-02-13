@@ -8,7 +8,7 @@ import avatarMappingObject from '../../../../utils/avatarMappingObject';
 import useUserInfoStore from '../../../../stores/userInfoStore';
 import useUserAvatarStore from '../../../../stores/userAvatarStore';
 
-function UserAvatarModal({ setModalType, setIsModalOpen }) {
+function UserAvatarModal({ client, setModalType, setIsModalOpen }) {
   const { userName, avatar, setAvatar } = useUserInfoStore();
   const { userAvatar } = useUserAvatarStore();
 
@@ -33,8 +33,10 @@ function UserAvatarModal({ setModalType, setIsModalOpen }) {
 
   const handleClick = (index) => {
     setAvatar(index);
-
-    // TODO: 소켓으로 현재 선택한 아바타 번호 보내기
+    client.current.publish({
+      destination: '/bingo/avatar',
+      body: JSON.stringify({ avatar }),
+    });
   };
 
   return (
@@ -69,6 +71,8 @@ function UserAvatarModal({ setModalType, setIsModalOpen }) {
 }
 
 UserAvatarModal.propTypes = {
+  // eslint-disable-next-line react/forbid-prop-types
+  client: PropTypes.object.isRequired,
   setModalType: PropTypes.func.isRequired,
   setIsModalOpen: PropTypes.func.isRequired,
 };
