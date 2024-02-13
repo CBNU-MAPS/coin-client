@@ -1,10 +1,12 @@
 import React from 'react';
 
 import style from './BingoBoard.module.scss';
+import useBingoInfoStore from '../../../stores/bingoInfoStore';
+import useQuestionStore from '../../../stores/questionStore';
 
 function BingoBoard() {
-  const bingoSize = 5;
-  const questions = Array(bingoSize * bingoSize).fill(null);
+  const { bingoSize } = useBingoInfoStore();
+  const { questions } = useQuestionStore();
 
   const bingoCellSize = {
     width: `${21 * (bingoSize + 2 * (4 - bingoSize))}px`,
@@ -13,11 +15,10 @@ function BingoBoard() {
 
   return (
     <div className={`${style.bingoBoard}`}>
-      {questions.map((question, index) => {
+      {questions.map((question) => {
         return (
           <div
-            // eslint-disable-next-line react/no-array-index-key
-            key={index}
+            key={question.id}
             className={`${style.bingoCell}`}
             style={bingoCellSize}>
             {null}
