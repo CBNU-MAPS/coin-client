@@ -11,7 +11,7 @@ function UserSettingModalOverlay({ client, setIsModalOpen }) {
   return (
     <div className={`${style.modalOverlay}`}>
       {modalType === 'userName' ? (
-        <UserNameModal setModalType={setModalType} />
+        <UserNameModal setModalType={setModalType} client={client} />
       ) : (
         <UserAvatarModal
           setModalType={setModalType}

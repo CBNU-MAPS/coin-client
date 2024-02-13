@@ -41,9 +41,6 @@ function Bingo() {
       connectHeaders: {
         code: roomCode,
       },
-      debug: (d) => {
-        console.log(d);
-      },
       onConnect: () => {
         subscribe();
       },
@@ -52,7 +49,14 @@ function Bingo() {
     client.current.activate();
 
     return () => client.current.deactivate();
-  }, [roomCode, setBingoHeadCount, setBingoName, setBingoSize, setQuestions]);
+  }, [
+    roomCode,
+    setBingoHeadCount,
+    setBingoName,
+    setBingoSize,
+    setQuestions,
+    setUserAvatar,
+  ]);
 
   return (
     <div>

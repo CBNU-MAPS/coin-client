@@ -35,7 +35,7 @@ function UserAvatarModal({ client, setModalType, setIsModalOpen }) {
     setAvatar(index);
     client.current.publish({
       destination: '/bingo/avatar',
-      body: JSON.stringify({ avatar }),
+      body: JSON.stringify({ avatar: index }),
     });
   };
 

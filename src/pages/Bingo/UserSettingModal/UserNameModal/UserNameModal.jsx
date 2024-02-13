@@ -5,8 +5,8 @@ import NextIcon from '../../../../Icons/NextIcon';
 import style from './UserNameModal.module.scss';
 import useUserInfoStore from '../../../../stores/userInfoStore';
 
-function UserNameModal({ setModalType }) {
-  const { userName, setUserName } = useUserInfoStore();
+function UserNameModal({ client, setModalType }) {
+  const { userName, setUserName, avatar } = useUserInfoStore();
   const inputChange = (event) => {
     setUserName(event.target.value);
   };
@@ -16,6 +16,10 @@ function UserNameModal({ setModalType }) {
       alert('이름을 입력해주세요.');
     } else {
       setModalType('userAvatarModal');
+      client.current.publish({
+        destination: '/bingo/avatar',
+        body: JSON.stringify({ avatar }),
+      });
     }
   };
 
@@ -40,6 +44,8 @@ function UserNameModal({ setModalType }) {
 }
 
 UserNameModal.propTypes = {
+  // eslint-disable-next-line react/forbid-prop-types
+  client: PropTypes.object.isRequired,
   setModalType: PropTypes.func.isRequired,
 };
 
