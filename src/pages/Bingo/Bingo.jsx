@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 // eslint-disable-next-line import/no-unresolved
 import { Client } from '@stomp/stompjs';
 
+import style from './Bingo.module.scss';
 import useBingoInfoStore from '../../stores/bingoInfoStore';
 import useQuestionStore from '../../stores/questionStore';
 import UserSettingModalOverlay from './UserSettingModal/UserSettingModalOverlay';
@@ -59,7 +60,7 @@ function Bingo() {
   ]);
 
   return (
-     <div className={`${style.container} bold26`}>
+    <div className={`${style.container} bold26`}>
       {isModalOpen && (
         <UserSettingModalOverlay
           setIsModalOpen={setIsModalOpen}

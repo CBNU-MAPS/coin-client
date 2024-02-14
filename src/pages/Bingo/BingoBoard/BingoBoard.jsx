@@ -19,7 +19,7 @@ function BingoBoard() {
         return (
           <div
             key={question.id}
-            className={`${style.bingoCell}`}
+            className={`${style.bingoCell} bold18`}
             style={bingoCellSize}>
             {null}
           </div>

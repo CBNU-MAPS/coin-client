@@ -11,7 +11,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  text-align: center;
   border: 2px solid $primary;
   border-radius: 5px;
   margin: auto;
+  background-color: white;
+  box-shadow: 0 0 30px 5px #efefef;
 }
