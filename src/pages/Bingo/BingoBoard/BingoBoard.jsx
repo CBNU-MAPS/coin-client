@@ -21,7 +21,7 @@ function BingoBoard() {
             key={question.id}
             className={`${style.bingoCell} bold18`}
             style={bingoCellSize}>
-            국내 여행 가기
+            {null}
           </div>
         );
       })}
