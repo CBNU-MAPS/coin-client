@@ -7,6 +7,7 @@ import useBingoInfoStore from '../../stores/bingoInfoStore';
 import useQuestionStore from '../../stores/questionStore';
 import UserSettingModalOverlay from './UserSettingModal/UserSettingModalOverlay';
 import useUserAvatarStore from '../../stores/userAvatarStore';
+import BingoBoard from './BingoBoard/BingoBoard';
 
 function Bingo() {
   const client = useRef({});
@@ -58,13 +59,14 @@ function Bingo() {
   ]);
 
   return (
-    <div>
+     <div className={`${style.container} bold26`}>
       {isModalOpen && (
         <UserSettingModalOverlay
           setIsModalOpen={setIsModalOpen}
           client={client}
         />
       )}
+      <BingoBoard />
     </div>
   );
 }

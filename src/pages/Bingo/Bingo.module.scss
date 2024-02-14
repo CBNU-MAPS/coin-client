@@ -1,5 +1,9 @@
-@import '../../styles/color.scss';
-
-.test {
-    background-color: $primary;
+.container {
+  width: 390px;
+  height: 764px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 80px;
 }
