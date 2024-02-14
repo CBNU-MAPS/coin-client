@@ -18,7 +18,7 @@ function Bingo() {
 
   useEffect(() => {
     const subscribe = () => {
-      client.current.subscribe(`/room/${roomCode}`, (data) => {
+      client.current.subscribe(`/room/${roomCode}/room`, (data) => {
         const { bingoName, bingoSize, bingoHeadCount, questions } = JSON.parse(
           data.body,
         );
