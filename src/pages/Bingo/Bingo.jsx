@@ -9,6 +9,7 @@ import useQuestionStore from '../../stores/questionStore';
 import UserSettingModalOverlay from './UserSettingModal/UserSettingModalOverlay';
 import useUserAvatarStore from '../../stores/userAvatarStore';
 import BingoBoard from './BingoBoard/BingoBoard';
+import BingoHeader from './BingoHeader/BingoHeader';
 
 function Bingo() {
   const client = useRef({});
@@ -67,6 +68,7 @@ function Bingo() {
           client={client}
         />
       )}
+      <BingoHeader />
       <BingoBoard />
     </div>
   );

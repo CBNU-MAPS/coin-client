@@ -27,6 +27,7 @@ function BingoNameModal({ setModalType }) {
         className={`${style.modalInput} medium24`}
         value={bingoName}
         onChange={inputChange}
+        maxLength="10"
       />
       <div className={`${style.nextButton}`}>
         <button
