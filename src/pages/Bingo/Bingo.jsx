@@ -1,20 +1,22 @@
-import React, { useEffect, useRef } from 'react';
-import { useLocation } from 'react-router-dom';
+import React, { useState, useEffect, useRef } from 'react';
+import { useParams } from 'react-router-dom';
 // eslint-disable-next-line import/no-unresolved
 import { Client } from '@stomp/stompjs';
 
-import style from './Bingo.module.scss';
 import useBingoInfoStore from '../../stores/bingoInfoStore';
 import useQuestionStore from '../../stores/questionStore';
+import UserSettingModalOverlay from './UserSettingModal/UserSettingModalOverlay';
+import useUserAvatarStore from '../../stores/userAvatarStore';
 import BingoBoard from './BingoBoard/BingoBoard';
 
 function Bingo() {
   const client = useRef({});
-  const location = useLocation();
+  const { roomCode } = useParams();
 
-  const roomCode = location.pathname.split('/')[2];
+  const [isModalOpen, setIsModalOpen] = useState(true);
   const { setBingoName, setBingoHeadCount, setBingoSize } = useBingoInfoStore();
   const { setQuestions } = useQuestionStore();
+  const { setUserAvatar } = useUserAvatarStore();
 
   useEffect(() => {
     const subscribe = () => {
@@ -26,6 +28,11 @@ function Bingo() {
         setBingoHeadCount(bingoHeadCount);
         setBingoSize(bingoSize);
         setQuestions(questions);
+      });
+
+      client.current.subscribe(`/room/${roomCode}/avatar`, (data) => {
+        const { selectedAvatars } = JSON.parse(data.body);
+        setUserAvatar(selectedAvatars);
       });
     };
 
@@ -42,10 +49,23 @@ function Bingo() {
     client.current.activate();
 
     return () => client.current.deactivate();
-  }, [roomCode, setBingoHeadCount, setBingoName, setBingoSize, setQuestions]);
+  }, [
+    roomCode,
+    setBingoHeadCount,
+    setBingoName,
+    setBingoSize,
+    setQuestions,
+    setUserAvatar,
+  ]);
 
   return (
-    <div className={`${style.container} bold26`}>
+     <div className={`${style.container} bold26`}>
+      {isModalOpen && (
+        <UserSettingModalOverlay
+          setIsModalOpen={setIsModalOpen}
+          client={client}
+        />
+      )}
       <BingoBoard />
     </div>
   );
