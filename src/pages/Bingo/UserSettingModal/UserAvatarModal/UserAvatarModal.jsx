@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import style from './UserAvatarModal.module.scss';
@@ -11,6 +11,17 @@ import useUserAvatarStore from '../../../../stores/userAvatarStore';
 function UserAvatarModal({ client, setModalType, setIsModalOpen }) {
   const { userName, avatar, setAvatar } = useUserInfoStore();
   const { userAvatar } = useUserAvatarStore();
+  const [selectedDiv, setSelectedDiv] = useState(avatar);
+
+  const avatarItemClassName = (index, item) => {
+    if (selectedDiv === index) {
+      return style.mySelected;
+    }
+    if (item) {
+      return style.selected;
+    }
+    return style.notSelected;
+  };
 
   const handlePrevButton = () => {
     setModalType('userName');
@@ -36,6 +47,7 @@ function UserAvatarModal({ client, setModalType, setIsModalOpen }) {
 
   const handleClick = (index) => {
     setAvatar(index);
+    setSelectedDiv(index);
     client.current.publish({
       destination: '/bingo/avatar',
       body: JSON.stringify({ avatar: index }),
@@ -50,7 +62,7 @@ function UserAvatarModal({ client, setModalType, setIsModalOpen }) {
           <div
             // eslint-disable-next-line react/no-array-index-key
             key={index}
-            className={`${item ? style.selected : style.notselected} medium18`}
+            className={`${avatarItemClassName(index, item)} medium18`}
             onClick={() => !item && handleClick(index)}
             onKeyDown={() => !item && handleClick(index)}
             role="presentation">

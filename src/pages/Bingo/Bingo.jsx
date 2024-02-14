@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 // eslint-disable-next-line import/no-unresolved
 import { Client } from '@stomp/stompjs';
 
@@ -10,9 +10,8 @@ import useUserAvatarStore from '../../stores/userAvatarStore';
 
 function Bingo() {
   const client = useRef({});
-  const location = useLocation();
+  const { roomCode } = useParams();
 
-  const roomCode = location.pathname.split('/')[2];
   const [isModalOpen, setIsModalOpen] = useState(true);
   const { setBingoName, setBingoHeadCount, setBingoSize } = useBingoInfoStore();
   const { setQuestions } = useQuestionStore();
