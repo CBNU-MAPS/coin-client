@@ -53,7 +53,7 @@ function BingoSizeModal({ setModalType }) {
         return response.json();
       })
       .then(({ roomCode }) => {
-        navigate(`/bingo/${roomCode}`);
+        navigate(`/bingo/${roomCode}`, { replace: true });
       })
       .catch((error) => {
         throw new Error(error);
