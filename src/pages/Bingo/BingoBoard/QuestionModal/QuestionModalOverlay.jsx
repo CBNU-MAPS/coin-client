@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import style from './QuestionModalOverlay.module.scss';
 import useQuestionStore from '../../../../stores/questionStore';
 import InputModal from './InputModal/InputModal';
+import SelectModal from './SelectModal/SelectModal';
 
 function QuestionModalOverlay({ selectedQuestionId, setIsModalOpen }) {
   const { questions } = useQuestionStore();
@@ -18,7 +19,12 @@ function QuestionModalOverlay({ selectedQuestionId, setIsModalOpen }) {
           selectedQuestion={selectedQuestion}
           setIsModalOpen={setIsModalOpen}
         />
-      ) : null}
+      ) : (
+        <SelectModal
+          selectedQuestion={selectedQuestion}
+          setIsModalOpen={setIsModalOpen}
+        />
+      )}
     </div>
   );
 }

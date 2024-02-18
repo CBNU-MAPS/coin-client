@@ -21,12 +21,13 @@ function InputModal({ selectedQuestion, setIsModalOpen }) {
         if (item.id === selectedQuestion.id) {
           return { id: selectedQuestion.id, answer };
         }
-        return answer;
+        return item;
       });
       setAnswers(updatedAnswers);
     } else {
       setAnswers([...answers, { id: selectedQuestion.id, answer }]);
     }
+    console.log(answers);
     setIsModalOpen(false);
   };
 
