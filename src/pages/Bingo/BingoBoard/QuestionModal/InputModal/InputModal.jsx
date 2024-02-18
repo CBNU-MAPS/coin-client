@@ -27,7 +27,6 @@ function InputModal({ selectedQuestion, setIsModalOpen }) {
     } else {
       setAnswers([...answers, { id: selectedQuestion.id, answer }]);
     }
-    console.log(answers);
     setIsModalOpen(false);
   };
 

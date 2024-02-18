@@ -8,7 +8,7 @@ import useAnswerStore from '../../../stores/answerStore';
 
 function BingoBoard() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedQuestionId, setSelectedQuestionId] = useState(1);
+  const [selectedQuestionId, setSelectedQuestionId] = useState(null);
   const { bingoSize } = useBingoInfoStore();
   const { questions } = useQuestionStore();
   const { answers } = useAnswerStore();
