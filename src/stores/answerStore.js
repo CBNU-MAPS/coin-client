@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 
 const useAnswerStore = create((set) => ({
-  answer: [],
+  answers: [],
   setAnswers: (answers) => set({ answers }),
 }));
 

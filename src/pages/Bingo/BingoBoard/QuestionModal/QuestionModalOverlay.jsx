@@ -3,18 +3,29 @@ import PropTypes from 'prop-types';
 
 import style from './QuestionModalOverlay.module.scss';
 import useQuestionStore from '../../../../stores/questionStore';
+import InputModal from './InputModal/InputModal';
 
-function QuestionModalOverlay({ selectedQuestionId }) {
+function QuestionModalOverlay({ selectedQuestionId, setIsModalOpen }) {
   const { questions } = useQuestionStore();
-  const questionType = questions.filter(
+  const selectedQuestion = questions.filter(
     (question) => question.id === selectedQuestionId,
-  )[0].type;
+  )[0];
 
-  return <div className={`${style.modalOverlay}`}>overlay</div>;
+  return (
+    <div className={`${style.modalOverlay}`}>
+      {selectedQuestion.type === 'text' ? (
+        <InputModal
+          selectedQuestion={selectedQuestion}
+          setIsModalOpen={setIsModalOpen}
+        />
+      ) : null}
+    </div>
+  );
 }
-
-export default QuestionModalOverlay;
 
 QuestionModalOverlay.propTypes = {
   selectedQuestionId: PropTypes.number.isRequired,
+  setIsModalOpen: PropTypes.func.isRequired,
 };
+
+export default QuestionModalOverlay;
