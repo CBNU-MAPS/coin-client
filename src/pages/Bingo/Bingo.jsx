@@ -65,6 +65,7 @@ function Bingo() {
     setBingoSize,
     setQuestions,
     setUserAvatar,
+    setUsers,
   ]);
 
   return (
