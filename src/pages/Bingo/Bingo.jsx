@@ -2,12 +2,13 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 // eslint-disable-next-line import/no-unresolved
 import { Client } from '@stomp/stompjs';
+import { useShallow } from 'zustand/react/shallow';
 
 import style from './Bingo.module.scss';
+import useUserAvatarStore from '../../stores/userAvatarStore';
 import useBingoInfoStore from '../../stores/bingoInfoStore';
 import useQuestionStore from '../../stores/questionStore';
 import UserSettingModalOverlay from './UserSettingModal/UserSettingModalOverlay';
-import useUserAvatarStore from '../../stores/userAvatarStore';
 import BingoBoard from './BingoBoard/BingoBoard';
 import BingoHeader from './BingoHeader/BingoHeader';
 import UserBoard from './UserBoard/UserBoard';
@@ -17,10 +18,17 @@ function Bingo() {
   const { roomCode } = useParams();
 
   const [isModalOpen, setIsModalOpen] = useState(true);
-  const { setBingoName, setBingoHeadCount, setBingoSize, setUsers } =
-    useBingoInfoStore();
-  const { setQuestions } = useQuestionStore();
-  const { setUserAvatar } = useUserAvatarStore();
+  const [setBingoName, setBingoHeadCount, setBingoSize, setUsers] =
+    useBingoInfoStore(
+      useShallow((state) => [
+        state.setBingoName,
+        state.setBingoHeadCount,
+        state.setBingoSize,
+        state.setUsers,
+      ]),
+    );
+  const setQuestions = useQuestionStore((state) => state.setQuestions);
+  const setUserAvatar = useUserAvatarStore((state) => state.setUserAvatar);
 
   useEffect(() => {
     const subscribe = () => {

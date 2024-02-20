@@ -5,7 +5,7 @@ import useBingoInfoStore from '../../../stores/bingoInfoStore';
 import avatarMappingObject from '../../../utils/avatarMappingObject';
 
 function UserBoard() {
-  const { users } = useBingoInfoStore();
+  const users = useBingoInfoStore((state) => state.users);
 
   return (
     <div className={style.userBoard}>

@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useShallow } from 'zustand/react/shallow';
 import PropTypes from 'prop-types';
 
 import style from './BingoSizeModal.module.scss';
@@ -12,8 +13,15 @@ import useBingoInfoStore from '../../../../stores/bingoInfoStore';
 function BingoSizeModal({ setModalType }) {
   const navigate = useNavigate();
 
-  const { bingoName, bingoHeadCount, bingoSize, setBingoSize } =
-    useBingoInfoStore();
+  const [bingoName, bingoHeadCount, bingoSize, setBingoSize] =
+    useBingoInfoStore(
+      useShallow((state) => [
+        state.bingoName,
+        state.bingoHeadCount,
+        state.bingoSize,
+        state.setBingoSize,
+      ]),
+    );
 
   const handleMinusButton = () => {
     if (bingoSize === 3) {

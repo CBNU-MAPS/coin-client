@@ -1,4 +1,5 @@
 import React from 'react';
+import { useShallow } from 'zustand/react/shallow';
 import PropTypes from 'prop-types';
 
 import NextIcon from '../../../../Icons/NextIcon';
@@ -6,7 +7,10 @@ import style from './UserNameModal.module.scss';
 import useUserInfoStore from '../../../../stores/userInfoStore';
 
 function UserNameModal({ client, setModalType }) {
-  const { userName, setUserName, avatar } = useUserInfoStore();
+  const [userName, setUserName, avatar] = useUserInfoStore(
+    useShallow((state) => [state.userName, state.setUserName, state.avatar]),
+  );
+
   const inputChange = (event) => {
     setUserName(event.target.value);
   };

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useShallow } from 'zustand/react/shallow';
 import PropTypes from 'prop-types';
 
 import style from './UserAvatarModal.module.scss';
@@ -9,8 +10,10 @@ import useUserInfoStore from '../../../../stores/userInfoStore';
 import useUserAvatarStore from '../../../../stores/userAvatarStore';
 
 function UserAvatarModal({ client, setModalType, setIsModalOpen }) {
-  const { userName, avatar, setAvatar } = useUserInfoStore();
-  const { userAvatar } = useUserAvatarStore();
+  const [userName, avatar, setAvatar] = useUserInfoStore(
+    useShallow((state) => [state.userName, state.avatar, state.setAvatar]),
+  );
+  const userAvatar = useUserAvatarStore((state) => state.userAvatar);
   const [selectedDiv, setSelectedDiv] = useState(avatar);
 
   const avatarItemClassName = (index, item) => {

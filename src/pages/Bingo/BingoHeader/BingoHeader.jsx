@@ -8,7 +8,7 @@ import LinkCopyIcon from '../../../Icons/LinkCopyIcon';
 import 'react-toastify/dist/ReactToastify.css';
 
 function BingoHeader() {
-  const { bingoName } = useBingoInfoStore();
+  const bingoName = useBingoInfoStore((state) => state.bingoName);
   const location = useLocation();
 
   const handleCopyClipBoard = async (text) => {

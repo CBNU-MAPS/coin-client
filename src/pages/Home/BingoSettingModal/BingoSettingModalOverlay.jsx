@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react';
+import { useShallow } from 'zustand/react/shallow';
 import PropTypes from 'prop-types';
 
 import BingoNameModal from './BingoNameModal/BingoNameModal';
@@ -8,7 +9,13 @@ import BingoSizeModal from './BingoSizeModal/BingoSizeModal';
 import useBingoInfoStore from '../../../stores/bingoInfoStore';
 
 function BingoSettingModalOverlay({ setIsModalOpen }) {
-  const { setBingoName, setBingoHeadCount, setBingoSize } = useBingoInfoStore();
+  const [setBingoName, setBingoHeadCount, setBingoSize] = useBingoInfoStore(
+    useShallow((state) => [
+      state.setBingoName,
+      state.setBingoHeadCount,
+      state.setBingoSize,
+    ]),
+  );
   const [modalType, setModalType] = useState('bingoName');
   const modalOverlay = useRef(null);
 

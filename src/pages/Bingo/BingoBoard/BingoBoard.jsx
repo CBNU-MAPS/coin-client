@@ -5,8 +5,8 @@ import useBingoInfoStore from '../../../stores/bingoInfoStore';
 import useQuestionStore from '../../../stores/questionStore';
 
 function BingoBoard() {
-  const { bingoSize } = useBingoInfoStore();
-  const { questions } = useQuestionStore();
+  const bingoSize = useBingoInfoStore((state) => state.bingoSize);
+  const questions = useQuestionStore((state) => state.questions);
 
   const bingoCellSize = {
     width: `${21 * (bingoSize + 2 * (4 - bingoSize))}px`,
