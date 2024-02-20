@@ -10,13 +10,15 @@ import UserSettingModalOverlay from './UserSettingModal/UserSettingModalOverlay'
 import useUserAvatarStore from '../../stores/userAvatarStore';
 import BingoBoard from './BingoBoard/BingoBoard';
 import BingoHeader from './BingoHeader/BingoHeader';
+import UserBoard from './UserBoard/UserBoard';
 
 function Bingo() {
   const client = useRef({});
   const { roomCode } = useParams();
 
   const [isModalOpen, setIsModalOpen] = useState(true);
-  const { setBingoName, setBingoHeadCount, setBingoSize } = useBingoInfoStore();
+  const { setBingoName, setBingoHeadCount, setBingoSize, setUsers } =
+    useBingoInfoStore();
   const { setQuestions } = useQuestionStore();
   const { setUserAvatar } = useUserAvatarStore();
 
@@ -35,6 +37,11 @@ function Bingo() {
       client.current.subscribe(`/room/${roomCode}/avatar`, (data) => {
         const { selectedAvatars } = JSON.parse(data.body);
         setUserAvatar(selectedAvatars);
+      });
+
+      client.current.subscribe(`/room/${roomCode}/user`, (data) => {
+        const { users } = JSON.parse(data.body);
+        setUsers(users);
       });
     };
 
@@ -61,7 +68,7 @@ function Bingo() {
   ]);
 
   return (
-    <div className={`${style.container} bold26`}>
+    <div className={style.container}>
       {isModalOpen && (
         <UserSettingModalOverlay
           setIsModalOpen={setIsModalOpen}
@@ -70,6 +77,7 @@ function Bingo() {
       )}
       <BingoHeader />
       <BingoBoard />
+      <UserBoard />
     </div>
   );
 }
