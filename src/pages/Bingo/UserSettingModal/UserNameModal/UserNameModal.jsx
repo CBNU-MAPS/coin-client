@@ -29,6 +29,7 @@ function UserNameModal({ client, setModalType }) {
       <input
         className={`${style.modalInput} medium24`}
         value={userName}
+        maxLength="7"
         onChange={inputChange}
       />
       <div className={`${style.nextButton}`}>

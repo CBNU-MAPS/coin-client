@@ -9,11 +9,24 @@ function UserBoard() {
 
   return (
     <div className={style.userBoard}>
-      {users.map((user) => (
-        <div className={`${style.user} bold18`}>
-          {avatarMappingObject[user.avatar]} &nbsp; {user.name}
-        </div>
-      ))}
+      {users.map((user, index) => {
+        const randomTop = Math.floor(Math.random() * 200);
+        const randomLeft = Math.floor(Math.random() * 270);
+        const location = {
+          top: `${randomTop}px`,
+          left: `${randomLeft}px`,
+          zIndex: `${index}`,
+        };
+
+        return (
+          <div
+            key={user.avatar}
+            className={`${style.user} bold18`}
+            style={location}>
+            {avatarMappingObject[user.avatar]} &nbsp; {user.name}
+          </div>
+        );
+      })}
     </div>
   );
 }
