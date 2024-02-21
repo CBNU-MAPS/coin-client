@@ -1,34 +1,34 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import style from './UserBoard.module.scss';
 import useBingoInfoStore from '../../../stores/bingoInfoStore';
 import avatarMappingObject from '../../../utils/avatarMappingObject';
 
-function UserBoard() {
+function UserBoard({ userRef }) {
   const users = useBingoInfoStore((state) => state.users);
 
   return (
-    <div className={style.userBoard}>
-      {users.map((user, index) => {
-        const randomTop = Math.floor(Math.random() * 200);
-        const randomLeft = Math.floor(Math.random() * 270);
-        const location = {
-          top: `${randomTop}px`,
-          left: `${randomLeft}px`,
-          zIndex: `${index}`,
-        };
-
-        return (
-          <div
-            key={user.avatar}
-            className={`${style.user} bold18`}
-            style={location}>
-            {avatarMappingObject[user.avatar]} &nbsp; {user.name}
-          </div>
-        );
-      })}
+    <div className={style.userBoard} ref={userRef}>
+      {users.map((user) => (
+        <div
+          id={user.avatar}
+          key={user.avatar}
+          className={`${style.user} bold18`}
+          style={{
+            top: `${Math.floor(Math.random() * 200)}px`,
+            left: `${Math.floor(Math.random() * 270)}px`,
+          }}>
+          {avatarMappingObject[user.avatar]} &nbsp; {user.name}
+        </div>
+      ))}
     </div>
   );
 }
+
+UserBoard.propTypes = {
+  // eslint-disable-next-line react/forbid-prop-types
+  userRef: PropTypes.object.isRequired,
+};
 
 export default UserBoard;

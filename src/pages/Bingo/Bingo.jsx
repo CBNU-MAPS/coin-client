@@ -12,12 +12,14 @@ import UserSettingModalOverlay from './UserSettingModal/UserSettingModalOverlay'
 import BingoBoard from './BingoBoard/BingoBoard';
 import BingoHeader from './BingoHeader/BingoHeader';
 import UserBoard from './UserBoard/UserBoard';
+import avatarMappingObject from '../../utils/avatarMappingObject';
 
 function Bingo() {
   const client = useRef({});
+  const userRef = useRef(null);
   const { roomCode } = useParams();
-
   const [isModalOpen, setIsModalOpen] = useState(true);
+  const [hasInfo, setHasInfo] = useState(false);
   const [setBingoName, setBingoHeadCount, setBingoSize, setUsers] =
     useBingoInfoStore(
       useShallow((state) => [
@@ -36,10 +38,12 @@ function Bingo() {
         const { bingoName, bingoSize, bingoHeadCount, questions } = JSON.parse(
           data.body,
         );
-        setBingoName(bingoName);
-        setBingoHeadCount(bingoHeadCount);
-        setBingoSize(bingoSize);
-        setQuestions(questions);
+        if (!hasInfo) {
+          setBingoName(bingoName);
+          setBingoHeadCount(bingoHeadCount);
+          setBingoSize(bingoSize);
+          setQuestions(questions);
+        }
       });
 
       client.current.subscribe(`/room/${roomCode}/avatar`, (data) => {
@@ -47,9 +51,34 @@ function Bingo() {
         setUserAvatar(selectedAvatars);
       });
 
+      client.current.subscribe(`/room/${roomCode}/users`, (data) => {
+        const users = JSON.parse(data.body).users || [];
+        if (!hasInfo) {
+          setUsers(users);
+          setHasInfo(true);
+        }
+      });
+
       client.current.subscribe(`/room/${roomCode}/user`, (data) => {
-        const { users } = JSON.parse(data.body);
-        setUsers(users);
+        const { avatar, name } = JSON.parse(data.body);
+
+        const userDiv = document.createElement('div');
+        userDiv.id = avatar;
+        userDiv.className = `${style.user} bold18`;
+        userDiv.style.top = `${Math.floor(Math.random() * 200)}px`;
+        userDiv.style.left = `${Math.floor(Math.random() * 270)}px`;
+        userDiv.innerHTML = `${avatarMappingObject[avatar]} &nbsp; ${name}`;
+
+        userRef.current.appendChild(userDiv);
+      });
+
+      client.current.subscribe(`/room/${roomCode}/delete`, (data) => {
+        const { avatar } = JSON.parse(data.body);
+        userRef.current.childNodes.forEach((userDiv) => {
+          if (+userDiv.id === avatar) {
+            userRef.current.removeChild(userDiv);
+          }
+        });
       });
     };
 
@@ -68,6 +97,7 @@ function Bingo() {
     return () => client.current.deactivate();
   }, [
     roomCode,
+    hasInfo,
     setBingoHeadCount,
     setBingoName,
     setBingoSize,
@@ -86,7 +116,7 @@ function Bingo() {
       )}
       <BingoHeader />
       <BingoBoard />
-      <UserBoard />
+      <UserBoard userRef={userRef} />
     </div>
   );
 }
