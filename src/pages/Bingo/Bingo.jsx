@@ -11,7 +11,7 @@ import useQuestionStore from '../../stores/questionStore';
 import UserSettingModalOverlay from './UserSettingModal/UserSettingModalOverlay';
 import BingoBoard from './BingoBoard/BingoBoard';
 import BingoHeader from './BingoHeader/BingoHeader';
-import UserBoard from './UserBoard/UserBoard';
+import MemoizedUserBoard from './UserBoard/UserBoard';
 import avatarMappingObject from '../../utils/avatarMappingObject';
 
 function Bingo() {
@@ -116,7 +116,7 @@ function Bingo() {
       )}
       <BingoHeader />
       <BingoBoard />
-      <UserBoard userRef={userRef} />
+      <MemoizedUserBoard userRef={userRef} />
     </div>
   );
 }

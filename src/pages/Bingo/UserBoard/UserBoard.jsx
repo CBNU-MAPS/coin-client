@@ -31,4 +31,6 @@ UserBoard.propTypes = {
   userRef: PropTypes.object.isRequired,
 };
 
-export default UserBoard;
+const MemoizedUserBoard = React.memo(UserBoard);
+
+export default MemoizedUserBoard;
