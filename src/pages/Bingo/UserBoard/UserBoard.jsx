@@ -8,6 +8,22 @@ import avatarMappingObject from '../../../utils/avatarMappingObject';
 function UserBoard({ userRef }) {
   const users = useBingoInfoStore((state) => state.users);
 
+  const moveUsers = () => {
+    userRef.current.childNodes.forEach((child) => {
+      const x =
+        Math.floor(Math.random() * 250) - child.style.left.replace('px', '');
+      const y =
+        Math.floor(Math.random() * 200) - child.style.top.replace('px', '');
+
+      // eslint-disable-next-line no-param-reassign
+      child.style.transform = `translate(${x}px, ${y}px)`;
+    });
+  };
+
+  setInterval(() => {
+    moveUsers();
+  }, 5000);
+
   return (
     <div className={style.userBoard} ref={userRef}>
       {users.map((user) => (
@@ -17,7 +33,7 @@ function UserBoard({ userRef }) {
           className={`${style.user} bold18`}
           style={{
             top: `${Math.floor(Math.random() * 200)}px`,
-            left: `${Math.floor(Math.random() * 270)}px`,
+            left: `${Math.floor(Math.random() * 250)}px`,
           }}>
           {avatarMappingObject[user.avatar]} &nbsp; {user.name}
         </div>
