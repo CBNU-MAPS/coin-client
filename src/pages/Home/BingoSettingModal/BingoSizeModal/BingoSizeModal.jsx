@@ -50,7 +50,7 @@ function BingoSizeModal({ setModalType }) {
       size: bingoSize,
     };
 
-    fetch(`${import.meta.env.VITE_BASE_URL}/room`, {
+    fetch(`${import.meta.env.VITE_BASE_URL}/api/room`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
