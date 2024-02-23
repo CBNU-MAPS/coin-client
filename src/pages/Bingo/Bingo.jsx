@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 // eslint-disable-next-line import/no-unresolved
 import { Client } from '@stomp/stompjs';
 import { useShallow } from 'zustand/react/shallow';
@@ -18,6 +18,7 @@ function Bingo() {
   const client = useRef({});
   const userRef = useRef(null);
   const { roomCode } = useParams();
+  const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(true);
   const [hasInfo, setHasInfo] = useState(false);
   const [setBingoName, setBingoHeadCount, setBingoSize, setUsers] =
@@ -48,6 +49,10 @@ function Bingo() {
   useEffect(() => {
     const subscribe = () => {
       client.current.subscribe(`/room/${roomCode}/room`, (data) => {
+        if (!data.body) {
+          navigate('/inaccess', { replace: true });
+        }
+
         const { bingoName, bingoSize, bingoHeadCount, questions } = JSON.parse(
           data.body,
         );
@@ -77,7 +82,7 @@ function Bingo() {
 
         const userDiv = document.createElement('div');
         userDiv.id = avatar;
-        userDiv.className = `${style.user} medium18`;
+        userDiv.className = `${style.user} medium16`;
         userDiv.style.top = `${Math.floor(Math.random() * 200)}px`;
         userDiv.style.left = `${Math.floor(Math.random() * 250)}px`;
         userDiv.innerHTML = `${avatarMappingObject[avatar]} &nbsp; ${name}`;

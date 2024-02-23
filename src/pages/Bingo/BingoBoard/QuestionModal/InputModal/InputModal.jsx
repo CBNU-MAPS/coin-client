@@ -32,7 +32,7 @@ function InputModal({ selectedQuestion, setIsModalOpen }) {
 
   return (
     <div className={style.modal}>
-      <div className={`${style.modalTitle} bold32`}>
+      <div className={`${style.modalTitle} bold28`}>
         {selectedQuestion.question}
       </div>
       <input
