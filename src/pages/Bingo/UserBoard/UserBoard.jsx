@@ -30,7 +30,7 @@ function UserBoard({ userRef }) {
         <div
           id={user.avatar}
           key={user.avatar}
-          className={`${style.user} medium18`}
+          className={`${style.user} medium16`}
           style={{
             top: `${Math.floor(Math.random() * 200)}px`,
             left: `${Math.floor(Math.random() * 250)}px`,
