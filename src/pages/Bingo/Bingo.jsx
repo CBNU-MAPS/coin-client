@@ -20,6 +20,19 @@ function Bingo() {
   const { setQuestions } = useQuestionStore();
   const { setUserAvatar } = useUserAvatarStore();
 
+  const preventClose = (event) => {
+    event.preventDefault();
+  };
+
+  useEffect(() => {
+    (() => {
+      window.addEventListener('beforeunload', preventClose);
+    })();
+    return () => {
+      window.removeEventListener('beforeunload', preventClose);
+    };
+  }, []);
+
   useEffect(() => {
     const subscribe = () => {
       client.current.subscribe(`/room/${roomCode}/room`, (data) => {
