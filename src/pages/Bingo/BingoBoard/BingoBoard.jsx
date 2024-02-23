@@ -14,8 +14,8 @@ function BingoBoard() {
   const { answers } = useAnswerStore();
 
   const bingoCellSize = {
-    width: `${21 * (bingoSize + 2 * (4 - bingoSize)) - 5}px`,
-    height: `${21 * (bingoSize + 2 * (4 - bingoSize)) - 5}px`,
+    width: `${21 * (bingoSize + 2 * (4 - bingoSize)) - 15}px`,
+    height: `${21 * (bingoSize + 2 * (4 - bingoSize)) - 15}px`,
   };
 
   const handleCellClick = (id) => {

@@ -30,7 +30,7 @@ function SelectModal({ selectedQuestion, setIsModalOpen }) {
   return (
     <div>
       <div className={style.modal}>
-        <div className={`${style.modalTitle} bold32`}>
+        <div className={`${style.modalTitle} bold28`}>
           {selectedQuestion.question}
         </div>
         <div className={`${style.optionContainer} bold26`}>
