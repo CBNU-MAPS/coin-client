@@ -1,4 +1,5 @@
 import React from 'react';
+import { useShallow } from 'zustand/react/shallow';
 import PropTypes from 'prop-types';
 
 import style from './BingoNameModal.module.scss';
@@ -6,7 +7,9 @@ import NextIcon from '../../../../Icons/NextIcon';
 import useBingoInfoStore from '../../../../stores/bingoInfoStore';
 
 function BingoNameModal({ setModalType }) {
-  const { bingoName, setBingoName } = useBingoInfoStore();
+  const [bingoName, setBingoName] = useBingoInfoStore(
+    useShallow((state) => [state.bingoName, state.setBingoName]),
+  );
 
   const inputChange = (event) => {
     setBingoName(event.target.value);

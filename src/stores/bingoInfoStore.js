@@ -7,6 +7,8 @@ const useBingoInfoStore = create((set) => ({
   setBingoHeadCount: (count) => set({ bingoHeadCount: count }),
   bingoSize: 3,
   setBingoSize: (size) => set({ bingoSize: size }),
+  users: [],
+  setUsers: (users) => set({ users }),
 }));
 
 export default useBingoInfoStore;

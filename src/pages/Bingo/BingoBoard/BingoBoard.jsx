@@ -9,9 +9,9 @@ import useAnswerStore from '../../../stores/answerStore';
 function BingoBoard() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedQuestionId, setSelectedQuestionId] = useState(null);
-  const { bingoSize } = useBingoInfoStore();
-  const { questions } = useQuestionStore();
-  const { answers } = useAnswerStore();
+  const bingoSize = useBingoInfoStore((state) => state.bingoSize);
+  const questions = useQuestionStore((state) => state.questions);
+  const answers = useAnswerStore((state) => state.answers);
 
   const bingoCellSize = {
     width: `${21 * (bingoSize + 2 * (4 - bingoSize)) - 15}px`,

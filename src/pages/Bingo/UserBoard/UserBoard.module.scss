@@ -1,13 +1,12 @@
-@import '../../styles/color.scss';
+@import '../../../styles/color.scss';
 
-.container {
-  width: 390px;
-  height: 764px;
-  margin: auto;
+.userBoard {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-top: 60px;
+  position: relative;
+  width: 375px;
+  height: 222px;
+  margin-top: 30px;
+  z-index: -1;
 }
 
 .user {

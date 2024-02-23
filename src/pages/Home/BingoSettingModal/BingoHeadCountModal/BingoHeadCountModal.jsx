@@ -1,4 +1,5 @@
 import React from 'react';
+import { useShallow } from 'zustand/react/shallow';
 import PropTypes from 'prop-types';
 
 import style from './BingoHeadCountModal.module.scss';
@@ -9,7 +10,9 @@ import MinusIcon from '../../../../Icons/MinusIcon';
 import useBingoInfoStore from '../../../../stores/bingoInfoStore';
 
 function BingoHeadCountModal({ setModalType }) {
-  const { bingoHeadCount, setBingoHeadCount } = useBingoInfoStore();
+  const [bingoHeadCount, setBingoHeadCount] = useBingoInfoStore(
+    useShallow((state) => [state.bingoHeadCount, state.setBingoHeadCount]),
+  );
 
   const handleMinusButton = () => {
     if (bingoHeadCount === 2) {
