@@ -25,6 +25,23 @@ function BingoHeader() {
   return (
     <div className={style.header}>
       <div className={`${style.bingoName} bold32`}>{bingoName}</div>
+      <ToastContainer
+        toastClassName="bold18"
+        toastStyle={{
+          width: '250px',
+          height: '10px',
+          margin: '0 0 200px 70px',
+          borderRadius: '10px',
+          color: 'black',
+          textAlign: 'center',
+        }}
+        position="bottom-center"
+        autoClose={1500}
+        closeButton={false}
+        transition={Zoom}
+        hideProgressBar
+        limit={1}
+      />
       <button
         type="button"
         aria-label="Link Copy Button"
@@ -37,23 +54,6 @@ function BingoHeader() {
         <LinkCopyIcon />
         URL
       </button>
-      <ToastContainer
-        toastStyle={{
-          margin: '0 0 200px 70px',
-          width: '250px',
-          height: '10px',
-          borderRadius: '10px',
-          color: 'black',
-          textAlign: 'center',
-        }}
-        toastClassName="bold18"
-        position="bottom-center"
-        autoClose={1500}
-        hideProgressBar
-        closeButton={false}
-        limit={1}
-        transition={Zoom}
-      />
     </div>
   );
 }

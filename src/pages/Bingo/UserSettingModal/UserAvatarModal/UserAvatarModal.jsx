@@ -38,8 +38,6 @@ function UserAvatarModal({ client, setModalType, setIsModalOpen }) {
     if (avatar > 9) {
       alert('캐릭터를 선택해 주세요.');
     } else {
-      // eslint-disable-next-line
-      console.log(userInfo);
       setIsModalOpen(false);
       client.current.publish({
         destination: '/bingo/user',

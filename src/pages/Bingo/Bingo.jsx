@@ -32,6 +32,19 @@ function Bingo() {
   const setQuestions = useQuestionStore((state) => state.setQuestions);
   const setUserAvatar = useUserAvatarStore((state) => state.setUserAvatar);
 
+  const preventClose = (event) => {
+    event.preventDefault();
+  };
+
+  useEffect(() => {
+    (() => {
+      window.addEventListener('beforeunload', preventClose);
+    })();
+    return () => {
+      window.removeEventListener('beforeunload', preventClose);
+    };
+  }, []);
+
   useEffect(() => {
     const subscribe = () => {
       client.current.subscribe(`/room/${roomCode}/room`, (data) => {
