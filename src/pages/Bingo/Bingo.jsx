@@ -64,7 +64,7 @@ function Bingo() {
 
         const userDiv = document.createElement('div');
         userDiv.id = avatar;
-        userDiv.className = `${style.user} bold18`;
+        userDiv.className = `${style.user} medium18`;
         userDiv.style.top = `${Math.floor(Math.random() * 200)}px`;
         userDiv.style.left = `${Math.floor(Math.random() * 250)}px`;
         userDiv.innerHTML = `${avatarMappingObject[avatar]} &nbsp; ${name}`;

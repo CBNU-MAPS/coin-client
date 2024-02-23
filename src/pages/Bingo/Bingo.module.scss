@@ -23,12 +23,3 @@
   background-color: $input-default;
   transition: transform 5s;
 }
-
-// @keyframes moveBox {
-//   0% {
-//     transform: translate(-50%, -50%);
-//   }
-//   100% {
-//     transform: translate(calc(-50% + var(--x)), calc(-50% + var(--y)));
-//   }
-// }
