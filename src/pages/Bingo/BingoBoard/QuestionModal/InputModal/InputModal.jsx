@@ -23,6 +23,10 @@ function InputModal({ selectedQuestion, setIsModalOpen }) {
         }
         return item;
       });
+      if (answer === '') {
+        const selectedIndex = updatedAnswers.findIndex((item) => item.id === 2);
+        updatedAnswers.splice(selectedIndex, 1);
+      }
       setAnswers(updatedAnswers);
     } else {
       setAnswers([...answers, { id: selectedQuestion.id, answer }]);

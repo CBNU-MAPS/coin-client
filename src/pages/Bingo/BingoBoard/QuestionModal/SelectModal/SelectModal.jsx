@@ -1,11 +1,14 @@
 import React from 'react';
+import { useShallow } from 'zustand/react/shallow';
 import PropTypes from 'prop-types';
 
 import style from './SelectModal.module.scss';
 import useAnswerStore from '../../../../../stores/answerStore';
 
 function SelectModal({ selectedQuestion, setIsModalOpen }) {
-  const { answers, setAnswers } = useAnswerStore();
+  const [answers, setAnswers] = useAnswerStore(
+    useShallow((state) => [state.answers, state.setAnswers]),
+  );
   const selectedAnswer =
     answers.find((item) => item.id === selectedQuestion.id)?.answer || '';
 

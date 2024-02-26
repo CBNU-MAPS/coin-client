@@ -8,7 +8,7 @@ import SelectModal from './SelectModal/SelectModal';
 
 function QuestionModalOverlay({ selectedQuestionId, setIsModalOpen }) {
   const modalOverlay = useRef(null);
-  const { questions } = useQuestionStore();
+  const questions = useQuestionStore((state) => state.questions);
   const selectedQuestion = questions.filter(
     (question) => question.id === selectedQuestionId,
   )[0];

@@ -48,7 +48,7 @@ function BingoHeader() {
         className={`${style.copybutton} bold18`}
         onClick={() =>
           handleCopyClipBoard(
-            `${import.meta.env.VITE_BASE_URL}${location.pathname}`,
+            `${import.meta.env.VITE_CLIENT_URL}${location.pathname}`,
           )
         }>
         <LinkCopyIcon />
