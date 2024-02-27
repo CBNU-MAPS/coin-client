@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 
 import style from './BingoBoard.module.scss';
 import Button from '../../../components/Button/Button';
@@ -7,7 +8,7 @@ import useQuestionStore from '../../../stores/questionStore';
 import QuestionModalOverlay from './QuestionModal/QuestionModalOverlay';
 import useAnswerStore from '../../../stores/answerStore';
 
-function BingoBoard() {
+function BingoBoard({ client }) {
   const [isReady, setIsReady] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedQuestionId, setSelectedQuestionId] = useState(null);
@@ -29,14 +30,20 @@ function BingoBoard() {
     setIsModalOpen(true);
   };
 
-  const ready = () => {};
+  const ready = () => {
+    client.current.publish({
+      destination: '/bingo/ready',
+      body: JSON.stringify({ answers }),
+    });
+  };
 
   return (
     <div>
       <div className={`${style.bingoBoard}`}>
         {questions.map((question) => {
           const answer =
-            answers?.filter((item) => item.id === question.id)[0]?.answer || '';
+            answers?.filter((item) => item.questionId === question.id)[0]
+              ?.answer || '';
 
           return (
             <div
@@ -65,5 +72,10 @@ function BingoBoard() {
     </div>
   );
 }
+
+BingoBoard.propTypes = {
+  // eslint-disable-next-line react/forbid-prop-types
+  client: PropTypes.object.isRequired,
+};
 
 export default BingoBoard;

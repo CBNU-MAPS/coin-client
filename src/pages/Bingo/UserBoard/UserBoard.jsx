@@ -10,13 +10,13 @@ function UserBoard({ userRef }) {
 
   const moveUsers = () => {
     userRef.current.childNodes.forEach((child) => {
+      const childNode = child;
       const x =
         Math.floor(Math.random() * 250) - child.style.left.replace('px', '');
       const y =
         Math.floor(Math.random() * 200) - child.style.top.replace('px', '');
 
-      // eslint-disable-next-line no-param-reassign
-      child.style.transform = `translate(${x}px, ${y}px)`;
+      childNode.style.transform = `translate(${x}px, ${y}px)`;
     });
   };
 
@@ -34,6 +34,7 @@ function UserBoard({ userRef }) {
           style={{
             top: `${Math.floor(Math.random() * 200)}px`,
             left: `${Math.floor(Math.random() * 250)}px`,
+            backgroundColor: user.ready && '#000000',
           }}>
           {avatarMappingObject[user.avatar]} &nbsp; {user.name}
         </div>

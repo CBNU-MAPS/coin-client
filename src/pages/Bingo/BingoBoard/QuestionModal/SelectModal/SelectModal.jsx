@@ -10,13 +10,17 @@ function SelectModal({ selectedQuestion, setIsModalOpen }) {
     useShallow((state) => [state.answers, state.setAnswers]),
   );
   const selectedAnswer =
-    answers.find((item) => item.id === selectedQuestion.id)?.answer || '';
+    answers.find((item) => item.questionId === selectedQuestion.id)?.answer ||
+    '';
 
   const answerClick = (event) => {
     if (selectedAnswer) {
       const updatedAnswers = answers.map((item) => {
-        if (item.id === selectedQuestion.id) {
-          return { id: selectedQuestion.id, answer: event.target.innerText };
+        if (item.questionId === selectedQuestion.id) {
+          return {
+            questionId: selectedQuestion.id,
+            answer: event.target.innerText,
+          };
         }
         return item;
       });
@@ -24,7 +28,7 @@ function SelectModal({ selectedQuestion, setIsModalOpen }) {
     } else {
       setAnswers([
         ...answers,
-        { id: selectedQuestion.id, answer: event.target.innerText },
+        { questionId: selectedQuestion.id, answer: event.target.innerText },
       ]);
     }
     setIsModalOpen(false);

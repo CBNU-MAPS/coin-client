@@ -93,6 +93,16 @@ function Bingo() {
           }
         });
       });
+
+      client.current.subscribe(`/room/${roomCode}/ready`, (data) => {
+        const { avatar } = JSON.parse(data.body);
+        userRef.current.childNodes.forEach((userDiv) => {
+          if (+userDiv.id === avatar) {
+            const div = userDiv;
+            div.style.backgroundColor = '#000000';
+          }
+        });
+      });
     };
 
     client.current = new Client({
@@ -128,7 +138,7 @@ function Bingo() {
         />
       )}
       <BingoHeader />
-      <BingoBoard />
+      <BingoBoard client={client} />
       <MemoizedUserBoard userRef={userRef} />
     </div>
   );

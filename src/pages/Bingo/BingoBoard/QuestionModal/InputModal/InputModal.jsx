@@ -8,7 +8,8 @@ import useAnswerStore from '../../../../../stores/answerStore';
 function InputModal({ selectedQuestion, setIsModalOpen }) {
   const { answers, setAnswers } = useAnswerStore();
   const selectedAnswer =
-    answers.find((item) => item.id === selectedQuestion.id)?.answer || '';
+    answers.find((item) => item.questionId === selectedQuestion.id)?.answer ||
+    '';
   const [answer, setAnswer] = useState(selectedAnswer);
 
   const inputChange = (event) => {
@@ -18,18 +19,20 @@ function InputModal({ selectedQuestion, setIsModalOpen }) {
   const nextButtonClick = () => {
     if (selectedAnswer) {
       const updatedAnswers = answers.map((item) => {
-        if (item.id === selectedQuestion.id) {
-          return { id: selectedQuestion.id, answer };
+        if (item.questionId === selectedQuestion.id) {
+          return { questionId: selectedQuestion.id, answer };
         }
         return item;
       });
       if (answer === '') {
-        const selectedIndex = updatedAnswers.findIndex((item) => item.id === 2);
+        const selectedIndex = updatedAnswers.findIndex(
+          (item) => item.questionId === 2,
+        );
         updatedAnswers.splice(selectedIndex, 1);
       }
       setAnswers(updatedAnswers);
     } else {
-      setAnswers([...answers, { id: selectedQuestion.id, answer }]);
+      setAnswers([...answers, { questionId: selectedQuestion.id, answer }]);
     }
     setIsModalOpen(false);
   };
