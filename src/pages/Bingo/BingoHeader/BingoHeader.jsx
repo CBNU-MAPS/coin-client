@@ -9,6 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 function BingoHeader() {
   const bingoName = useBingoInfoStore((state) => state.bingoName);
+  const isStarted = useBingoInfoStore((state) => state.isStarted);
   const location = useLocation();
 
   const handleCopyClipBoard = async (text) => {
@@ -42,18 +43,21 @@ function BingoHeader() {
         hideProgressBar
         limit={1}
       />
-      <button
-        type="button"
-        aria-label="Link Copy Button"
-        className={`${style.copybutton} bold18`}
-        onClick={() =>
-          handleCopyClipBoard(
-            `${import.meta.env.VITE_BASE_URL}${location.pathname}`,
-          )
-        }>
-        <LinkCopyIcon />
-        URL
-      </button>
+      {/* TODO: null 대신 빙고 현황판 구현 */}
+      {isStarted ? null : (
+        <button
+          type="button"
+          aria-label="Link Copy Button"
+          className={`${style.copybutton} bold18`}
+          onClick={() =>
+            handleCopyClipBoard(
+              `${import.meta.env.VITE_CLIENT_URL}${location.pathname}`,
+            )
+          }>
+          <LinkCopyIcon />
+          URL
+        </button>
+      )}
     </div>
   );
 }

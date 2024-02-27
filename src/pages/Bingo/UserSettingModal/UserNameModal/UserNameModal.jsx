@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useShallow } from 'zustand/react/shallow';
 import PropTypes from 'prop-types';
 
@@ -7,9 +7,14 @@ import style from './UserNameModal.module.scss';
 import useUserInfoStore from '../../../../stores/userInfoStore';
 
 function UserNameModal({ client, setModalType }) {
+  const inputRef = useRef(null);
   const [userName, setUserName, avatar] = useUserInfoStore(
     useShallow((state) => [state.userName, state.setUserName, state.avatar]),
   );
+
+  useEffect(() => {
+    inputRef.current.focus();
+  }, []);
 
   const inputChange = (event) => {
     setUserName(event.target.value);
@@ -35,6 +40,7 @@ function UserNameModal({ client, setModalType }) {
         value={userName}
         maxLength="7"
         onChange={inputChange}
+        ref={inputRef}
       />
       <div className={`${style.nextButton}`}>
         <button

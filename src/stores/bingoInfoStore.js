@@ -9,6 +9,8 @@ const useBingoInfoStore = create((set) => ({
   setBingoSize: (size) => set({ bingoSize: size }),
   users: [],
   setUsers: (users) => set({ users }),
+  isStarted: false,
+  setIsStarted: (isStarted) => set({ isStarted }),
 }));
 
 export default useBingoInfoStore;

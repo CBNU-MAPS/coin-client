@@ -13,6 +13,7 @@ import BingoBoard from './BingoBoard/BingoBoard';
 import BingoHeader from './BingoHeader/BingoHeader';
 import MemoizedUserBoard from './UserBoard/UserBoard';
 import avatarMappingObject from '../../utils/avatarMappingObject';
+import Spinner from '../../components/Spinner/Spinner';
 
 function Bingo() {
   const client = useRef({});
@@ -21,15 +22,24 @@ function Bingo() {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(true);
   const [hasInfo, setHasInfo] = useState(false);
-  const [setBingoName, setBingoHeadCount, setBingoSize, setUsers] =
-    useBingoInfoStore(
-      useShallow((state) => [
-        state.setBingoName,
-        state.setBingoHeadCount,
-        state.setBingoSize,
-        state.setUsers,
-      ]),
-    );
+  const [isLoading, setIsLoading] = useState(false);
+  const [
+    setBingoName,
+    setBingoHeadCount,
+    setBingoSize,
+    setUsers,
+    isStarted,
+    setIsStarted,
+  ] = useBingoInfoStore(
+    useShallow((state) => [
+      state.setBingoName,
+      state.setBingoHeadCount,
+      state.setBingoSize,
+      state.setUsers,
+      state.isStarted,
+      state.setIsStarted,
+    ]),
+  );
   const setQuestions = useQuestionStore((state) => state.setQuestions);
   const setUserAvatar = useUserAvatarStore((state) => state.setUserAvatar);
 
@@ -71,6 +81,9 @@ function Bingo() {
 
       client.current.subscribe(`/room/${roomCode}/users`, (data) => {
         const users = JSON.parse(data.body).users || [];
+        if (isStarted) {
+          setUsers(users);
+        }
         if (!hasInfo) {
           setUsers(users);
           setHasInfo(true);
@@ -82,7 +95,7 @@ function Bingo() {
 
         const userDiv = document.createElement('div');
         userDiv.id = avatar;
-        userDiv.className = `${style.user} medium16`;
+        userDiv.className = `${style.user} medium16 created`;
         userDiv.style.top = `${Math.floor(Math.random() * 200)}px`;
         userDiv.style.left = `${Math.floor(Math.random() * 250)}px`;
         userDiv.innerHTML = `${avatarMappingObject[avatar]} &nbsp; ${name}`;
@@ -97,6 +110,31 @@ function Bingo() {
             userRef.current.removeChild(userDiv);
           }
         });
+      });
+
+      client.current.subscribe(`/room/${roomCode}/ready`, (data) => {
+        const { avatar, ready } = JSON.parse(data.body);
+        userRef.current.childNodes.forEach((userDiv) => {
+          if (+userDiv.id === avatar) {
+            const div = userDiv;
+            div.style.backgroundColor = ready ? '#000000' : '#d4d4d4';
+          }
+        });
+      });
+
+      client.current.subscribe(`/room/${roomCode}/start`, (data) => {
+        const { users } = JSON.parse(data.body);
+        setIsStarted(true);
+        Array.from(userRef.current.childNodes).forEach((userDiv) => {
+          if (userDiv.classList.contains('created')) {
+            userRef.current.removeChild(userDiv);
+          }
+        });
+        setUsers(users);
+        setIsLoading(true);
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 2000);
       });
     };
 
@@ -113,28 +151,26 @@ function Bingo() {
     client.current.activate();
 
     return () => client.current.deactivate();
-  }, [
-    roomCode,
-    hasInfo,
-    setBingoHeadCount,
-    setBingoName,
-    setBingoSize,
-    setQuestions,
-    setUserAvatar,
-    setUsers,
-  ]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [hasInfo]);
 
   return (
-    <div className={style.container}>
-      {isModalOpen && (
-        <UserSettingModalOverlay
-          setIsModalOpen={setIsModalOpen}
-          client={client}
-        />
+    <div>
+      {isLoading ? (
+        <Spinner />
+      ) : (
+        <div className={style.container}>
+          {isModalOpen && (
+            <UserSettingModalOverlay
+              setIsModalOpen={setIsModalOpen}
+              client={client}
+            />
+          )}
+          <BingoHeader />
+          <BingoBoard client={client} />
+          <MemoizedUserBoard userRef={userRef} />
+        </div>
       )}
-      <BingoHeader />
-      <BingoBoard />
-      <MemoizedUserBoard userRef={userRef} />
     </div>
   );
 }
