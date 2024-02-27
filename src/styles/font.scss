@@ -17,7 +17,7 @@
   }
 }
 
-@each $px in (16, 18, 24) {
+@each $px in (14, 15, 16, 18, 24) {
   .medium#{$px} {
     font-family: 'Pretendard-Medium';
     font-size: #{$px}px;

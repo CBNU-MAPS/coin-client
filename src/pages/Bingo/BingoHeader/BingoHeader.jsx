@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { toast, ToastContainer, Zoom } from 'react-toastify';
 
@@ -6,11 +6,13 @@ import style from './BingoHeader.module.scss';
 import useBingoInfoStore from '../../../stores/bingoInfoStore';
 import LinkCopyIcon from '../../../Icons/LinkCopyIcon';
 import 'react-toastify/dist/ReactToastify.css';
+import StatusBoard from './StatusBoard/StatusBoard';
 
 function BingoHeader() {
   const bingoName = useBingoInfoStore((state) => state.bingoName);
   const isStarted = useBingoInfoStore((state) => state.isStarted);
   const location = useLocation();
+  const [isOpenStatusBoard, setIsOpenStatusBoard] = useState(false);
 
   const handleCopyClipBoard = async (text) => {
     try {
@@ -21,6 +23,10 @@ function BingoHeader() {
       toast.error('링크 복사에 실패하였습니다.');
       toast.clearWaitingQueue();
     }
+  };
+
+  const openStatusBoard = () => {
+    setIsOpenStatusBoard(true);
   };
 
   return (
@@ -43,8 +49,16 @@ function BingoHeader() {
         hideProgressBar
         limit={1}
       />
-      {/* TODO: null 대신 빙고 현황판 구현 */}
-      {isStarted ? null : (
+
+      {isStarted ? (
+        <button
+          type="button"
+          aria-label="Bingo Board Check Button"
+          className={`${style.copybutton} bold18`}
+          onClick={openStatusBoard}>
+          빙고 현황 보기
+        </button>
+      ) : (
         <button
           type="button"
           aria-label="Link Copy Button"
@@ -58,6 +72,7 @@ function BingoHeader() {
           URL
         </button>
       )}
+      {isOpenStatusBoard && <StatusBoard />}
     </div>
   );
 }

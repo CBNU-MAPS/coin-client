@@ -1,0 +1,42 @@
+@import '../../../../styles/color.scss';
+
+.overlay {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  left: 0;
+}
+
+.board {
+  display: flex;
+  width: 340px;
+  height: 447px;
+  flex-direction: column;
+  align-items: center;
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: 5px 5px 20px 5px lightgrey;
+}
+
+.boardTitle {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.boardComment {
+  text-align: center;
+  margin-top: 8px;
+  color: $input-default;
+}
+
+.boardContents {
+  width: 296px;
+  height: 332px;
+  margin-top: 15px;
+  border-radius: 5px;
+  background-color: $board-background;
+}
