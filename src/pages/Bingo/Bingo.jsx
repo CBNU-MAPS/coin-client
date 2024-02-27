@@ -20,15 +20,23 @@ function Bingo() {
   const { roomCode } = useParams();
   const [isModalOpen, setIsModalOpen] = useState(true);
   const [hasInfo, setHasInfo] = useState(false);
-  const [setBingoName, setBingoHeadCount, setBingoSize, setUsers] =
-    useBingoInfoStore(
-      useShallow((state) => [
-        state.setBingoName,
-        state.setBingoHeadCount,
-        state.setBingoSize,
-        state.setUsers,
-      ]),
-    );
+  const [
+    setBingoName,
+    setBingoHeadCount,
+    setBingoSize,
+    setUsers,
+    isStarted,
+    setIsStarted,
+  ] = useBingoInfoStore(
+    useShallow((state) => [
+      state.setBingoName,
+      state.setBingoHeadCount,
+      state.setBingoSize,
+      state.setUsers,
+      state.isStarted,
+      state.setIsStarted,
+    ]),
+  );
   const setQuestions = useQuestionStore((state) => state.setQuestions);
   const setUserAvatar = useUserAvatarStore((state) => state.setUserAvatar);
 
@@ -66,6 +74,9 @@ function Bingo() {
 
       client.current.subscribe(`/room/${roomCode}/users`, (data) => {
         const users = JSON.parse(data.body).users || [];
+        if (isStarted) {
+          setUsers(users);
+        }
         if (!hasInfo) {
           setUsers(users);
           setHasInfo(true);
@@ -77,7 +88,7 @@ function Bingo() {
 
         const userDiv = document.createElement('div');
         userDiv.id = avatar;
-        userDiv.className = `${style.user} medium18`;
+        userDiv.className = `${style.user} medium18 created`;
         userDiv.style.top = `${Math.floor(Math.random() * 200)}px`;
         userDiv.style.left = `${Math.floor(Math.random() * 250)}px`;
         userDiv.innerHTML = `${avatarMappingObject[avatar]} &nbsp; ${name}`;
@@ -103,6 +114,17 @@ function Bingo() {
           }
         });
       });
+
+      client.current.subscribe(`/room/${roomCode}/start`, (data) => {
+        const { users } = JSON.parse(data.body);
+        setIsStarted(true);
+        Array.from(userRef.current.childNodes).forEach((userDiv) => {
+          if (userDiv.classList.contains('created')) {
+            userRef.current.removeChild(userDiv);
+          }
+        });
+        setUsers(users);
+      });
     };
 
     client.current = new Client({
@@ -118,16 +140,8 @@ function Bingo() {
     client.current.activate();
 
     return () => client.current.deactivate();
-  }, [
-    roomCode,
-    hasInfo,
-    setBingoHeadCount,
-    setBingoName,
-    setBingoSize,
-    setQuestions,
-    setUserAvatar,
-    setUsers,
-  ]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [hasInfo]);
 
   return (
     <div className={style.container}>

@@ -13,6 +13,7 @@ function BingoBoard({ client }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedQuestionId, setSelectedQuestionId] = useState(null);
   const bingoSize = useBingoInfoStore((state) => state.bingoSize);
+  const isStarted = useBingoInfoStore((state) => state.isStarted);
   const questions = useQuestionStore((state) => state.questions);
   const answers = useAnswerStore((state) => state.answers);
 
@@ -22,8 +23,14 @@ function BingoBoard({ client }) {
   };
 
   const handleCellClick = (id) => {
-    setSelectedQuestionId(id);
-    setIsModalOpen(true);
+    if (!isStarted) {
+      setSelectedQuestionId(id);
+      setIsModalOpen(true);
+    } else {
+      // TODO: 게임이 시작되었을 때 클릭 이벤트
+      // eslint-disable-next-line no-console
+      console.log('게임이 시작되었을 때 클릭 이벤트');
+    }
   };
 
   const ready = () => {
@@ -61,7 +68,7 @@ function BingoBoard({ client }) {
           />
         )}
       </div>
-      {answers.length === questions.length && (
+      {answers.length === questions.length && !isStarted && (
         <div className={style.readyButton}>
           <Button
             text={!isReady ? '준비 완료' : '준비 완료 해제'}
