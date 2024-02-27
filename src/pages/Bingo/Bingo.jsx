@@ -95,11 +95,11 @@ function Bingo() {
       });
 
       client.current.subscribe(`/room/${roomCode}/ready`, (data) => {
-        const { avatar } = JSON.parse(data.body);
+        const { avatar, ready } = JSON.parse(data.body);
         userRef.current.childNodes.forEach((userDiv) => {
           if (+userDiv.id === avatar) {
             const div = userDiv;
-            div.style.backgroundColor = '#000000';
+            div.style.backgroundColor = ready ? '#000000' : '#d4d4d4';
           }
         });
       });

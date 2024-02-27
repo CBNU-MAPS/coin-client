@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import style from './BingoBoard.module.scss';
@@ -16,10 +16,6 @@ function BingoBoard({ client }) {
   const questions = useQuestionStore((state) => state.questions);
   const answers = useAnswerStore((state) => state.answers);
 
-  useEffect(() => {
-    setIsReady(answers.length === questions.length);
-  }, [answers, questions]);
-
   const bingoCellSize = {
     width: `${21 * (bingoSize + 2 * (4 - bingoSize)) - 15}px`,
     height: `${21 * (bingoSize + 2 * (4 - bingoSize)) - 15}px`,
@@ -31,6 +27,7 @@ function BingoBoard({ client }) {
   };
 
   const ready = () => {
+    setIsReady(!isReady);
     client.current.publish({
       destination: '/bingo/ready',
       body: JSON.stringify({ answers }),
@@ -50,8 +47,8 @@ function BingoBoard({ client }) {
               key={question.id}
               className={`${style.bingoCell} bold18`}
               style={bingoCellSize}
-              onClick={() => handleCellClick(question.id)}
-              onKeyDown={() => handleCellClick(question.id)}
+              onClick={() => !isReady && handleCellClick(question.id)}
+              onKeyDown={() => !isReady && handleCellClick(question.id)}
               role="presentation">
               {answer}
             </div>
@@ -64,9 +61,12 @@ function BingoBoard({ client }) {
           />
         )}
       </div>
-      {isReady && (
+      {answers.length === questions.length && (
         <div className={style.readyButton}>
-          <Button text="준비 완료" handleClick={ready} />
+          <Button
+            text={!isReady ? '준비 완료' : '준비 완료 해제'}
+            handleClick={ready}
+          />
         </div>
       )}
     </div>

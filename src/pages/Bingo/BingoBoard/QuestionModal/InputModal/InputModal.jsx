@@ -26,7 +26,7 @@ function InputModal({ selectedQuestion, setIsModalOpen }) {
       });
       if (answer === '') {
         const selectedIndex = updatedAnswers.findIndex(
-          (item) => item.questionId === 2,
+          (item) => item.questionId === selectedQuestion.id,
         );
         updatedAnswers.splice(selectedIndex, 1);
       }
