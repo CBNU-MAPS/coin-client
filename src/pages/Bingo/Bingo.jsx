@@ -63,6 +63,7 @@ function Bingo() {
           data.body,
         );
         if (!hasInfo) {
+          console.log(data.body);
           if (!data.body) {
             navigate('/inaccess', { replace: true });
           }
