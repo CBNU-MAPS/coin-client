@@ -50,6 +50,14 @@ function BingoHeader() {
         limit={1}
       />
 
+      <button
+        type="button"
+        aria-label="Bingo Board Check Button"
+        className={`${style.copybutton} bold18`}
+        onClick={openStatusBoard}>
+        빙고 현황 보기
+      </button>
+
       {isStarted ? (
         <button
           type="button"
@@ -72,7 +80,9 @@ function BingoHeader() {
           URL
         </button>
       )}
-      {isOpenStatusBoard && <StatusBoard />}
+      {isOpenStatusBoard && (
+        <StatusBoard setIsOpenStatusBoard={setIsOpenStatusBoard} />
+      )}
     </div>
   );
 }

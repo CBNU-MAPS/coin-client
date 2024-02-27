@@ -1,10 +1,24 @@
-import React from 'react';
+import React, { useRef } from 'react';
+import PropTypes from 'prop-types';
 
 import style from './StatusBoard.module.scss';
 
-function StatusBoard() {
+function StatusBoard({ setIsOpenStatusBoard }) {
+  const overlay = useRef(null);
+
+  const closeBoard = (event) => {
+    if (event.target === overlay.current) {
+      setIsOpenStatusBoard(false);
+    }
+  };
+
   return (
-    <div className={style.overlay}>
+    <div
+      className={style.overlay}
+      ref={overlay}
+      onClick={closeBoard}
+      onKeyDown={closeBoard}
+      role="presentation">
       <div className={`${style.board}`}>
         <div className={`${style.boardTitle} bold26`}>빙고 현황</div>
         <div className={`${style.boardComment} medium14`}>
@@ -17,5 +31,9 @@ function StatusBoard() {
     </div>
   );
 }
+
+StatusBoard.propTypes = {
+  setIsOpenStatusBoard: PropTypes.func.isRequired,
+};
 
 export default StatusBoard;

@@ -60,7 +60,6 @@ function Bingo() {
     const subscribe = () => {
       client.current.subscribe(`/room/${roomCode}/room`, (data) => {
         if (!hasInfo) {
-          console.log(data.body);
           if (!data.body) {
             navigate('/inaccess', { replace: true });
           }
