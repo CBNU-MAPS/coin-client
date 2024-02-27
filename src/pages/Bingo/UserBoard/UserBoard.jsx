@@ -43,7 +43,7 @@ function UserBoard({ userRef }) {
               key={`selected-${user.avatar}`}
               className={`${style.startedUser} medium24`}
               style={{
-                backgroundColor: user.turn && '#000000',
+                backgroundColor: user.turn && '#84e296',
               }}>
               {avatarMappingObject[user.avatar]}
             </div>

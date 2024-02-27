@@ -13,6 +13,7 @@ import BingoBoard from './BingoBoard/BingoBoard';
 import BingoHeader from './BingoHeader/BingoHeader';
 import MemoizedUserBoard from './UserBoard/UserBoard';
 import avatarMappingObject from '../../utils/avatarMappingObject';
+import Spinner from '../../components/Spinner/Spinner';
 
 function Bingo() {
   const client = useRef({});
@@ -21,6 +22,7 @@ function Bingo() {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(true);
   const [hasInfo, setHasInfo] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [
     setBingoName,
     setBingoHeadCount,
@@ -129,6 +131,10 @@ function Bingo() {
           }
         });
         setUsers(users);
+        setIsLoading(true);
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 2000);
       });
     };
 
@@ -149,16 +155,22 @@ function Bingo() {
   }, [hasInfo]);
 
   return (
-    <div className={style.container}>
-      {isModalOpen && (
-        <UserSettingModalOverlay
-          setIsModalOpen={setIsModalOpen}
-          client={client}
-        />
+    <div>
+      {isLoading ? (
+        <Spinner />
+      ) : (
+        <div className={style.container}>
+          {isModalOpen && (
+            <UserSettingModalOverlay
+              setIsModalOpen={setIsModalOpen}
+              client={client}
+            />
+          )}
+          <BingoHeader />
+          <BingoBoard client={client} />
+          <MemoizedUserBoard userRef={userRef} />
+        </div>
       )}
-      <BingoHeader />
-      <BingoBoard client={client} />
-      <MemoizedUserBoard userRef={userRef} />
     </div>
   );
 }
