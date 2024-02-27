@@ -59,14 +59,13 @@ function Bingo() {
   useEffect(() => {
     const subscribe = () => {
       client.current.subscribe(`/room/${roomCode}/room`, (data) => {
-        if (!data.body) {
-          navigate('/inaccess', { replace: true });
-        }
-
         const { bingoName, bingoSize, bingoHeadCount, questions } = JSON.parse(
           data.body,
         );
         if (!hasInfo) {
+          if (!data.body) {
+            navigate('/inaccess', { replace: true });
+          }
           setBingoName(bingoName);
           setBingoHeadCount(bingoHeadCount);
           setBingoSize(bingoSize);
