@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useShallow } from 'zustand/react/shallow';
 import PropTypes from 'prop-types';
 
@@ -7,9 +7,14 @@ import NextIcon from '../../../../Icons/NextIcon';
 import useBingoInfoStore from '../../../../stores/bingoInfoStore';
 
 function BingoNameModal({ setModalType }) {
+  const inputRef = useRef(null);
   const [bingoName, setBingoName] = useBingoInfoStore(
     useShallow((state) => [state.bingoName, state.setBingoName]),
   );
+
+  useEffect(() => {
+    inputRef.current.focus();
+  }, []);
 
   const inputChange = (event) => {
     setBingoName(event.target.value);
@@ -31,6 +36,7 @@ function BingoNameModal({ setModalType }) {
         value={bingoName}
         onChange={inputChange}
         maxLength="9"
+        ref={inputRef}
       />
       <div className={`${style.nextButton}`}>
         <button

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 
 import style from './InputModal.module.scss';
@@ -6,11 +6,16 @@ import NextIcon from '../../../../../Icons/NextIcon';
 import useAnswerStore from '../../../../../stores/answerStore';
 
 function InputModal({ selectedQuestion, setIsModalOpen }) {
+  const inputRef = useRef(null);
   const { answers, setAnswers } = useAnswerStore();
   const selectedAnswer =
     answers.find((item) => item.questionId === selectedQuestion.id)?.answer ||
     '';
   const [answer, setAnswer] = useState(selectedAnswer);
+
+  useEffect(() => {
+    inputRef.current.focus();
+  }, []);
 
   const inputChange = (event) => {
     setAnswer(event.target.value);
@@ -47,6 +52,7 @@ function InputModal({ selectedQuestion, setIsModalOpen }) {
         value={answer}
         maxLength="6"
         onChange={inputChange}
+        ref={inputRef}
       />
       <div className={`${style.nextButton}`}>
         <button
