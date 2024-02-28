@@ -1,0 +1,99 @@
+@import '../../../../styles/color.scss';
+
+.overlay {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  left: 0;
+}
+
+.board {
+  display: flex;
+  width: 340px;
+  height: 447px;
+  flex-direction: column;
+  align-items: center;
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: 5px 5px 20px 5px lightgrey;
+}
+
+.boardTitle {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.boardComment {
+  text-align: center;
+  margin-top: 8px;
+  color: $input-default;
+}
+
+.boardContents {
+  width: 296px;
+  height: 332px;
+  margin-top: 15px;
+  border-radius: 5px;
+  background-color: $board-background;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  width: 296px;
+  height: 295px;
+  margin: 20px 0;
+  gap: 15px;
+  overflow-y: auto;
+  -ms-overflow-style: none; /*IE, Edge*/
+  scrollbar-width: none; /*Firefox*/
+  ::-webkit-scrollbar {
+    display: none; /*Chrome, Safari, Opera*/
+    width: 0px;
+  }
+}
+
+.boardContent {
+  display: flex;
+  flex-direction: column;
+  width: 275px;
+  margin: 0 auto;
+}
+
+.question {
+  display: flex;
+  gap: 5px;
+  margin-bottom: 7px;
+}
+
+.userList {
+  display: flex;
+  align-items: center;
+  width: 270px;
+  overflow-x: auto;
+  flex-wrap: nowrap;
+  gap: 7px;
+  -ms-overflow-style: none; /*IE, Edge*/
+  scrollbar-width: none; /*Firefox*/
+  ::-webkit-scrollbar {
+    display: none; /*Chrome, Safari, Opera*/
+    width: 0px;
+  }
+}
+
+.answer {
+  display: flex;
+  background-color: $input-default;
+  padding: 4px 6px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+
+.user {
+  white-space: nowrap;
+}

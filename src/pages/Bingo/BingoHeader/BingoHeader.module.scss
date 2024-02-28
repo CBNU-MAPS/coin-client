@@ -13,7 +13,20 @@
   justify-content: space-between;
   flex-direction: row;
   align-items: center;
-  width: 84px;
+  height: 37px;
+  background-color: $primary;
+  border: none;
+  border-radius: 13px;
+  color: $text-dark;
+  padding: 0 11px;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.headerButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   height: 37px;
   background-color: $primary;
   border: none;
