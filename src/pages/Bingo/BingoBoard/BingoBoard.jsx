@@ -5,6 +5,7 @@ import style from './BingoBoard.module.scss';
 import Button from '../../../components/Button/Button';
 import useBingoInfoStore from '../../../stores/bingoInfoStore';
 import useQuestionStore from '../../../stores/questionStore';
+import useUserInfoStore from '../../../stores/userInfoStore';
 import QuestionModalOverlay from './QuestionModal/QuestionModalOverlay';
 import useAnswerStore from '../../../stores/answerStore';
 
@@ -16,6 +17,7 @@ function BingoBoard({ client, boardRef }) {
   const isStarted = useBingoInfoStore((state) => state.isStarted);
   const questions = useQuestionStore((state) => state.questions);
   const answers = useAnswerStore((state) => state.answers);
+  const isTurn = useUserInfoStore((state) => state.isTurn);
 
   const bingoCellSize = {
     width: `${21 * (bingoSize + 2 * (4 - bingoSize)) - 15}px`,
@@ -26,8 +28,7 @@ function BingoBoard({ client, boardRef }) {
     if (!isStarted) {
       setSelectedQuestionId(id);
       setIsModalOpen(true);
-    } else {
-      // TODO: 게임이 시작되었을 때 클릭 이벤트
+    } else if (isTurn) {
       client.current.publish({
         destination: '/bingo/select',
         body: JSON.stringify({ questionId: id, answer }),
