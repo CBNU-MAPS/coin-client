@@ -24,6 +24,8 @@ function Bingo() {
   const { roomCode } = useParams();
   const navigate = useNavigate();
 
+  const audio = new Audio('/sounds/selectBingo.mp3');
+
   const [isModalOpen, setIsModalOpen] = useState(true);
   const [hasInfo, setHasInfo] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -169,6 +171,7 @@ function Bingo() {
             +cell.id === answer.questionId &&
             cell.innerHTML === answer.answer
           ) {
+            audio.play();
             cell.classList.add(style.selected);
           }
         });
