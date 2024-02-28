@@ -173,6 +173,10 @@ function Bingo() {
           }
         });
       });
+
+      client.current.subscribe(`/room/${roomCode}/end`, () => {
+        navigate(`/result/${roomCode}`, { replace: true });
+      });
     };
 
     // 연결
@@ -207,7 +211,7 @@ function Bingo() {
   return (
     <div>
       {isLoading ? (
-        <Spinner />
+        <Spinner text="게임 준비중" />
       ) : (
         <div className={style.container}>
           {isModalOpen && (
