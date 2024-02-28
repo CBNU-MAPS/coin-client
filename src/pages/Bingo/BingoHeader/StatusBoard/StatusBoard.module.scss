@@ -40,3 +40,60 @@
   border-radius: 5px;
   background-color: $board-background;
 }
+
+.container {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  width: 296px;
+  height: 295px;
+  margin: 20px 0;
+  gap: 15px;
+  overflow-y: auto;
+  -ms-overflow-style: none; /*IE, Edge*/
+  scrollbar-width: none; /*Firefox*/
+  ::-webkit-scrollbar {
+    display: none; /*Chrome, Safari, Opera*/
+    width: 0px;
+  }
+}
+
+.boardContent {
+  display: flex;
+  flex-direction: column;
+  width: 275px;
+  margin: 0 auto;
+}
+
+.question {
+  display: flex;
+  gap: 5px;
+  margin-bottom: 7px;
+}
+
+.userList {
+  display: flex;
+  align-items: center;
+  width: 270px;
+  overflow-x: auto;
+  flex-wrap: nowrap;
+  gap: 7px;
+  -ms-overflow-style: none; /*IE, Edge*/
+  scrollbar-width: none; /*Firefox*/
+  ::-webkit-scrollbar {
+    display: none; /*Chrome, Safari, Opera*/
+    width: 0px;
+  }
+}
+
+.answer {
+  display: flex;
+  background-color: $input-default;
+  padding: 4px 6px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+
+.user {
+  white-space: nowrap;
+}

@@ -1,0 +1,174 @@
+{
+  "statusBoardList": [
+    {
+      "answer": "토맛 토마토",
+      "question": "여기서 옷 환불할 때 함께 가고 싶은 사람은?",
+      "selectedUsers": [
+        {
+          "name": "김기원",
+          "avatar": 2
+        },
+        {
+          "name": "강지웅",
+          "avatar": 3
+        },
+        {
+          "name": "오민석",
+          "avatar": 4
+        },
+        {
+          "name": "김기원",
+          "avatar": 2
+        },
+        {
+          "name": "강지웅",
+          "avatar": 3
+        },
+        {
+          "name": "오민석",
+          "avatar": 4
+        }
+      ]
+    },
+    {
+      "answer": "아니다",
+      "question": "핫도그는 샌드위치다?",
+      "selectedUsers": [
+        {
+          "name": "김기원",
+          "avatar": 2
+        },
+        {
+          "name": "강지웅",
+          "avatar": 3
+        }
+      ]
+    },
+    {
+      "answer": "아니다",
+      "question": "핫도그는 샌드위치다?",
+      "selectedUsers": [
+        {
+          "name": "김기원",
+          "avatar": 2
+        },
+        {
+          "name": "강지웅",
+          "avatar": 3
+        }
+      ]
+    },
+    {
+      "answer": "아니다",
+      "question": "핫도그는 샌드위치다?",
+      "selectedUsers": [
+        {
+          "name": "김기원",
+          "avatar": 2
+        },
+        {
+          "name": "강지웅",
+          "avatar": 3
+        }
+      ]
+    },
+    {
+      "answer": "아니다",
+      "question": "핫도그는 샌드위치다?",
+      "selectedUsers": [
+        {
+          "name": "김기원",
+          "avatar": 2
+        },
+        {
+          "name": "강지웅",
+          "avatar": 3
+        }
+      ]
+    },
+    {
+      "answer": "아니다",
+      "question": "핫도그는 샌드위치다?",
+      "selectedUsers": [
+        {
+          "name": "김기원",
+          "avatar": 2
+        },
+        {
+          "name": "강지웅",
+          "avatar": 3
+        }
+      ]
+    },
+    {
+      "answer": "아니다",
+      "question": "핫도그는 샌드위치다?",
+      "selectedUsers": [
+        {
+          "name": "김기원",
+          "avatar": 2
+        },
+        {
+          "name": "강지웅",
+          "avatar": 3
+        }
+      ]
+    },
+    {
+      "answer": "아니다",
+      "question": "핫도그는 샌드위치다?",
+      "selectedUsers": [
+        {
+          "name": "김기원",
+          "avatar": 2
+        },
+        {
+          "name": "강지웅",
+          "avatar": 3
+        }
+      ]
+    },
+    {
+      "answer": "아니다",
+      "question": "핫도그는 샌드위치다?",
+      "selectedUsers": [
+        {
+          "name": "김기원",
+          "avatar": 2
+        },
+        {
+          "name": "강지웅",
+          "avatar": 3
+        }
+      ]
+    },
+    {
+      "answer": "아니다",
+      "question": "핫도그는 샌드위치다?",
+      "selectedUsers": [
+        {
+          "name": "김기원",
+          "avatar": 2
+        },
+        {
+          "name": "강지웅",
+          "avatar": 3
+        }
+      ]
+    },
+    {
+      "answer": "아니다",
+      "question": "핫도그는 샌드위치다?",
+      "selectedUsers": [
+        {
+          "name": "김기원",
+          "avatar": 2
+        },
+        {
+          "name": "강지웅",
+          "avatar": 3
+        }
+      ]
+    }
+  ]
+}

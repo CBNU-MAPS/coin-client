@@ -2,8 +2,9 @@ import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 
 import style from './StatusBoard.module.scss';
+import avatarMappingObject from '../../../../utils/avatarMappingObject';
 
-function StatusBoard({ setIsOpenStatusBoard }) {
+function StatusBoard({ statusBoardInfo, setIsOpenStatusBoard }) {
   const overlay = useRef(null);
 
   const closeBoard = (event) => {
@@ -25,7 +26,25 @@ function StatusBoard({ setIsOpenStatusBoard }) {
           현재까지의 빙고 현황을 확인할 수 있어요.
         </div>
         <div className={`${style.boardContents} medium15`}>
-          TURN1. 좋아하는 음악 장르는?
+          <div className={`${style.container}`}>
+            {statusBoardInfo.map((item, index) => (
+              <div className={`${style.boardContent}`}>
+                <div className={`${style.question}`}>
+                  <p className="bold14">{`Turn${statusBoardInfo.length - index}. `}</p>
+                  <p>{item.question}</p>
+                </div>
+                <div className={`${style.userList}`}>
+                  <p className={`${style.answer} bold14`}>{item.answer}</p>
+                  {item.selectedUsers.map((user) => (
+                    <div className={`${style.user}`}>
+                      {avatarMappingObject[user.avatar]}
+                      {user.name}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
@@ -33,6 +52,8 @@ function StatusBoard({ setIsOpenStatusBoard }) {
 }
 
 StatusBoard.propTypes = {
+  // eslint-disable-next-line
+  statusBoardInfo: PropTypes.array.isRequired,
   setIsOpenStatusBoard: PropTypes.func.isRequired,
 };
 

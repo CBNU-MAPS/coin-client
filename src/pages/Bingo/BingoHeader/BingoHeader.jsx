@@ -13,6 +13,7 @@ function BingoHeader() {
   const isStarted = useBingoInfoStore((state) => state.isStarted);
   const location = useLocation();
   const [isOpenStatusBoard, setIsOpenStatusBoard] = useState(false);
+  const [statusBoardInfo, setStatusBoardInfo] = useState([]);
 
   const handleCopyClipBoard = async (text) => {
     try {
@@ -26,6 +27,17 @@ function BingoHeader() {
   };
 
   const openStatusBoard = () => {
+    // TODO: API 개발이 되면 연동하기
+    fetch('/statusBoardList.json')
+      .then((response) => {
+        return response.json();
+      })
+      .then(({ statusBoardList }) => {
+        setStatusBoardInfo(statusBoardList);
+      })
+      .catch((error) => {
+        throw new Error(error);
+      });
     setIsOpenStatusBoard(true);
   };
 
@@ -50,14 +62,6 @@ function BingoHeader() {
         limit={1}
       />
 
-      <button
-        type="button"
-        aria-label="Bingo Board Check Button"
-        className={`${style.copybutton} bold18`}
-        onClick={openStatusBoard}>
-        빙고 현황 보기
-      </button>
-
       {isStarted ? (
         <button
           type="button"
@@ -81,7 +85,10 @@ function BingoHeader() {
         </button>
       )}
       {isOpenStatusBoard && (
-        <StatusBoard setIsOpenStatusBoard={setIsOpenStatusBoard} />
+        <StatusBoard
+          statusBoardInfo={statusBoardInfo}
+          setIsOpenStatusBoard={setIsOpenStatusBoard}
+        />
       )}
     </div>
   );
