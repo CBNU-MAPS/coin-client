@@ -17,6 +17,7 @@ import Spinner from '../../components/Spinner/Spinner';
 
 function Bingo() {
   const client = useRef({});
+  const boardRef = useRef(null);
   const userRef = useRef(null);
   const { roomCode } = useParams();
   const navigate = useNavigate();
@@ -28,7 +29,6 @@ function Bingo() {
     setBingoHeadCount,
     setBingoSize,
     setUsers,
-    isStarted,
     setIsStarted,
   ] = useBingoInfoStore(
     useShallow((state) => [
@@ -36,7 +36,6 @@ function Bingo() {
       state.setBingoHeadCount,
       state.setBingoSize,
       state.setUsers,
-      state.isStarted,
       state.setIsStarted,
     ]),
   );
@@ -74,20 +73,17 @@ function Bingo() {
         }
       });
 
-      client.current.subscribe(`/room/${roomCode}/avatar`, (data) => {
-        const { selectedAvatars } = JSON.parse(data.body);
-        setUserAvatar(selectedAvatars);
-      });
-
       client.current.subscribe(`/room/${roomCode}/users`, (data) => {
         const users = JSON.parse(data.body).users || [];
-        if (isStarted) {
-          setUsers(users);
-        }
         if (!hasInfo) {
           setUsers(users);
           setHasInfo(true);
         }
+      });
+
+      client.current.subscribe(`/room/${roomCode}/avatar`, (data) => {
+        const { selectedAvatars } = JSON.parse(data.body);
+        setUserAvatar(selectedAvatars);
       });
 
       client.current.subscribe(`/room/${roomCode}/user`, (data) => {
@@ -136,6 +132,18 @@ function Bingo() {
           setIsLoading(false);
         }, 2000);
       });
+
+      client.current.subscribe(`/room/${roomCode}/select`, (data) => {
+        const { answer } = JSON.parse(data.body);
+        boardRef.current.childNodes.forEach((cell) => {
+          if (
+            +cell.id === answer.questionId &&
+            cell.innerHTML === answer.answer
+          ) {
+            cell.classList.add(style.selected);
+          }
+        });
+      });
     };
 
     client.current = new Client({
@@ -151,8 +159,18 @@ function Bingo() {
     client.current.activate();
 
     return () => client.current.deactivate();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [hasInfo]);
+  }, [
+    hasInfo,
+    roomCode,
+    setBingoName,
+    setBingoHeadCount,
+    setBingoSize,
+    setQuestions,
+    setUserAvatar,
+    setUsers,
+    setIsStarted,
+    navigate,
+  ]);
 
   return (
     <div>
@@ -167,7 +185,7 @@ function Bingo() {
             />
           )}
           <BingoHeader />
-          <BingoBoard client={client} />
+          <BingoBoard client={client} boardRef={boardRef} />
           <MemoizedUserBoard userRef={userRef} />
         </div>
       )}

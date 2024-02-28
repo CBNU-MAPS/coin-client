@@ -8,7 +8,7 @@ import useQuestionStore from '../../../stores/questionStore';
 import QuestionModalOverlay from './QuestionModal/QuestionModalOverlay';
 import useAnswerStore from '../../../stores/answerStore';
 
-function BingoBoard({ client }) {
+function BingoBoard({ client, boardRef }) {
   const [isReady, setIsReady] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedQuestionId, setSelectedQuestionId] = useState(null);
@@ -22,14 +22,16 @@ function BingoBoard({ client }) {
     height: `${21 * (bingoSize + 2 * (4 - bingoSize)) - 15}px`,
   };
 
-  const handleCellClick = (id) => {
+  const handleCellClick = (id, answer) => {
     if (!isStarted) {
       setSelectedQuestionId(id);
       setIsModalOpen(true);
     } else {
       // TODO: 게임이 시작되었을 때 클릭 이벤트
-      // eslint-disable-next-line no-console
-      console.log('게임이 시작되었을 때 클릭 이벤트');
+      client.current.publish({
+        destination: '/bingo/select',
+        body: JSON.stringify({ questionId: id, answer }),
+      });
     }
   };
 
@@ -43,7 +45,7 @@ function BingoBoard({ client }) {
 
   return (
     <div>
-      <div className={`${style.bingoBoard}`}>
+      <div className={`${style.bingoBoard}`} ref={boardRef}>
         {questions.map((question) => {
           const answer =
             answers?.filter((item) => item.questionId === question.id)[0]
@@ -51,11 +53,12 @@ function BingoBoard({ client }) {
 
           return (
             <div
+              id={question.id}
               key={question.id}
               className={`${style.bingoCell} bold18`}
               style={bingoCellSize}
-              onClick={() => !isReady && handleCellClick(question.id)}
-              onKeyDown={() => !isReady && handleCellClick(question.id)}
+              onClick={() => !isReady && handleCellClick(question.id, answer)}
+              onKeyDown={() => !isReady && handleCellClick(question.id, answer)}
               role="presentation">
               {answer}
             </div>
@@ -83,6 +86,8 @@ function BingoBoard({ client }) {
 BingoBoard.propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
   client: PropTypes.object.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  boardRef: PropTypes.object.isRequired,
 };
 
 export default BingoBoard;

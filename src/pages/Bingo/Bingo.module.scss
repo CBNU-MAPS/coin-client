@@ -23,3 +23,8 @@
   background-color: $input-default;
   transition: transform 5s;
 }
+
+.selected {
+  color: $text-light;
+  background-color: $primary;
+}
