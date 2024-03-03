@@ -10,7 +10,7 @@
   font-weight: 500;
 }
 
-@each $px in (14, 18, 26, 28, 32, 42) {
+@each $px in (14, 18, 24, 26, 28, 32, 42) {
   .bold#{$px} {
     font-family: 'Pretendard-Bold';
     font-size: #{$px}px;
