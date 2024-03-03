@@ -173,6 +173,7 @@ function Bingo() {
           ) {
             audio.play();
             cell.classList.add(style.selected);
+            cell.classList.add('selected');
           }
         });
       });
