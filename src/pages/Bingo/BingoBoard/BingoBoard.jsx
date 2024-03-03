@@ -8,6 +8,7 @@ import useQuestionStore from '../../../stores/questionStore';
 import useUserInfoStore from '../../../stores/userInfoStore';
 import QuestionModalOverlay from './QuestionModal/QuestionModalOverlay';
 import useAnswerStore from '../../../stores/answerStore';
+import sortAnswersByQuestionId from '../../../utils/sortAnswersByQuestionId';
 
 function BingoBoard({ client, boardRef }) {
   const [isReady, setIsReady] = useState(false);
@@ -38,9 +39,10 @@ function BingoBoard({ client, boardRef }) {
 
   const ready = () => {
     setIsReady(!isReady);
+    const sortedAnswers = sortAnswersByQuestionId(questions, answers);
     client.current.publish({
       destination: '/bingo/ready',
-      body: JSON.stringify({ answers }),
+      body: JSON.stringify({ answers: sortedAnswers }),
     });
   };
 
