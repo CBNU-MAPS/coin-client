@@ -9,6 +9,7 @@ import PrevIcon from '../../../../Icons/PrevIcon';
 import PlusIcon from '../../../../Icons/PlusIcon';
 import MinusIcon from '../../../../Icons/MinusIcon';
 import useBingoInfoStore from '../../../../stores/bingoInfoStore';
+import createRoom from '../../../../apis/createRoom';
 
 function BingoSizeModal({ setModalType }) {
   const navigate = useNavigate();
@@ -43,29 +44,15 @@ function BingoSizeModal({ setModalType }) {
     setModalType('bingoHeadCount');
   };
 
-  const createBingo = () => {
+  const createBingo = async () => {
     const bingoInfo = {
       name: bingoName,
       personnel: bingoHeadCount,
       size: bingoSize,
     };
 
-    fetch(`${import.meta.env.VITE_BASE_URL}/api/room`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(bingoInfo),
-    })
-      .then((response) => {
-        return response.json();
-      })
-      .then(({ roomCode }) => {
-        navigate(`/bingo/${roomCode}`, { replace: true });
-      })
-      .catch((error) => {
-        throw new Error(error);
-      });
+    const roomCode = await createRoom(bingoInfo);
+    navigate(`/bingo/${roomCode}`, { replace: true });
   };
 
   return (
