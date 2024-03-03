@@ -15,6 +15,7 @@ import BingoHeader from './BingoHeader/BingoHeader';
 import MemoizedUserBoard from './UserBoard/UserBoard';
 import Spinner from '../../components/Spinner/Spinner';
 import avatarMappingObject from '../../utils/avatarMappingObject';
+import shuffleArray from '../../utils/shuffleArray';
 
 function Bingo() {
   const client = useRef({});
@@ -100,6 +101,7 @@ function Bingo() {
           setBingoName(bingoName);
           setBingoHeadCount(bingoHeadCount);
           setBingoSize(bingoSize);
+          console.log(questions, shuffleArray(questions));
           setQuestions(questions);
         }
       });
