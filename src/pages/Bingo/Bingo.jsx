@@ -101,8 +101,7 @@ function Bingo() {
           setBingoName(bingoName);
           setBingoHeadCount(bingoHeadCount);
           setBingoSize(bingoSize);
-          console.log(questions, shuffleArray(questions));
-          setQuestions(questions);
+          setQuestions(shuffleArray(questions));
         }
       });
 

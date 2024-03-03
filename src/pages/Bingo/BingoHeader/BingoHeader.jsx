@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { toast, ToastContainer, Zoom } from 'react-toastify';
 
 import style from './BingoHeader.module.scss';
@@ -7,6 +7,7 @@ import useBingoInfoStore from '../../../stores/bingoInfoStore';
 import LinkCopyIcon from '../../../Icons/LinkCopyIcon';
 import 'react-toastify/dist/ReactToastify.css';
 import StatusBoard from './StatusBoard/StatusBoard';
+import getBingoState from '../../../apis/getBingoState';
 
 function BingoHeader() {
   const bingoName = useBingoInfoStore((state) => state.bingoName);
@@ -14,6 +15,7 @@ function BingoHeader() {
   const location = useLocation();
   const [isOpenStatusBoard, setIsOpenStatusBoard] = useState(false);
   const [statusBoardInfo, setStatusBoardInfo] = useState([]);
+  const { roomCode } = useParams();
 
   const handleCopyClipBoard = async (text) => {
     try {
@@ -26,18 +28,10 @@ function BingoHeader() {
     }
   };
 
-  const openStatusBoard = () => {
-    // TODO: API 개발이 되면 연동하기
-    fetch('/statusBoardList.json')
-      .then((response) => {
-        return response.json();
-      })
-      .then(({ statusBoardList }) => {
-        setStatusBoardInfo(statusBoardList);
-      })
-      .catch((error) => {
-        throw new Error(error);
-      });
+  const openStatusBoard = async () => {
+    const statusBoardList = await getBingoState(roomCode);
+
+    setStatusBoardInfo(statusBoardList);
     setIsOpenStatusBoard(true);
   };
 
