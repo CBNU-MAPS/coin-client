@@ -21,6 +21,7 @@ function Bingo() {
   const client = useRef({});
   const boardRef = useRef(null);
   const userRef = useRef(null);
+  const alertRef = useRef(null);
 
   const { roomCode } = useParams();
   const navigate = useNavigate();
@@ -80,11 +81,14 @@ function Bingo() {
         if (isStarted) {
           const index = users.findIndex((user) => user.avatar === myAvatar);
           setIsTurn(users[index].turn);
+          if (users[index].turn) {
+            alertRef.current.classList.add(style.boxDown);
+          }
           setUsers(users);
         }
       });
     }
-  }, [roomCode, setUsers, isStarted, setIsTurn, myAvatar]);
+  }, [roomCode, setUsers, isStarted, setIsTurn, myAvatar, alertRef]);
 
   // 스톰프 클라이언트 연결 및 구독
   useEffect(() => {
@@ -225,6 +229,9 @@ function Bingo() {
               client={client}
             />
           )}
+          <div ref={alertRef} className={`${style.alert} medium18`}>
+            <p className="bold24">⏱️</p> &nbsp; 이제 선택할 시간이에요 :p
+          </div>
           <BingoHeader />
           <BingoBoard client={client} boardRef={boardRef} />
           <MemoizedUserBoard userRef={userRef} />
