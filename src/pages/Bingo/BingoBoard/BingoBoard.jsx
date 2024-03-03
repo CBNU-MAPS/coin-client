@@ -24,11 +24,11 @@ function BingoBoard({ client, boardRef }) {
     height: `${21 * (bingoSize + 2 * (4 - bingoSize)) - 15}px`,
   };
 
-  const handleCellClick = (id, answer) => {
+  const handleCellClick = (event, id, answer) => {
     if (!isStarted) {
       setSelectedQuestionId(id);
       setIsModalOpen(true);
-    } else if (isTurn) {
+    } else if (isTurn && !event.target.classList.contains('selected')) {
       client.current.publish({
         destination: '/bingo/select',
         body: JSON.stringify({ questionId: id, answer }),
@@ -58,8 +58,12 @@ function BingoBoard({ client, boardRef }) {
               key={question.id}
               className={`${style.bingoCell} bold18`}
               style={bingoCellSize}
-              onClick={() => !isReady && handleCellClick(question.id, answer)}
-              onKeyDown={() => !isReady && handleCellClick(question.id, answer)}
+              onClick={(event) =>
+                !isReady && handleCellClick(event, question.id, answer)
+              }
+              onKeyDown={(event) =>
+                !isReady && handleCellClick(event, question.id, answer)
+              }
               role="presentation">
               {answer}
             </div>
