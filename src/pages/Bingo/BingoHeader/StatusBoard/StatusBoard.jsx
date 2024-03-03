@@ -28,7 +28,7 @@ function StatusBoard({ statusBoardInfo, setIsOpenStatusBoard }) {
         <div className={`${style.boardContents} medium15`}>
           <div className={`${style.container}`}>
             {statusBoardInfo.map((item, index) => (
-              <div className={`${style.boardContent}`}>
+              <div key={item.question} className={`${style.boardContent}`}>
                 <div className={`${style.question}`}>
                   <p className="bold14">{`Turn${statusBoardInfo.length - index}. `}</p>
                   <p>{item.question}</p>
@@ -36,7 +36,7 @@ function StatusBoard({ statusBoardInfo, setIsOpenStatusBoard }) {
                 <div className={`${style.userList}`}>
                   <p className={`${style.answer} bold14`}>{item.answer}</p>
                   {item.selectedUsers.map((user) => (
-                    <div className={`${style.user}`}>
+                    <div key={user.avatar} className={`${style.user}`}>
                       {avatarMappingObject[user.avatar]}
                       {user.name}
                     </div>
