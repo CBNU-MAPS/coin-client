@@ -82,7 +82,9 @@ function Bingo() {
           const index = users.findIndex((user) => user.avatar === myAvatar);
           setIsTurn(users[index].turn);
           if (users[index].turn) {
-            alertRef.current.classList.add(style.boxDown);
+            alertRef.current.classList.add(style.show);
+          } else {
+            alertRef.current.classList.remove(style.show);
           }
           setUsers(users);
         }
