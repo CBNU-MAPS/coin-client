@@ -31,7 +31,7 @@
 }
 
 .alert {
-  display: flex;
+  display: none;
   justify-content: center;
   align-items: center;
   position: absolute;
@@ -40,10 +40,13 @@
   top: -40px;
   left: 0;
   background-color: $primary;
+  animation: box-down 4s linear;
 }
 
-.boxDown {
-  animation: box-down 4s linear;
+.show {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 @keyframes box-down {
