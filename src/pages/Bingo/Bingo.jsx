@@ -221,7 +221,7 @@ function Bingo() {
   ]);
 
   if (isLoading) {
-    return <Spinner text="로딩중" />;
+    return <Spinner text="빙고 생성중" />;
   }
 
   return (

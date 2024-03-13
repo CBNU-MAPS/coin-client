@@ -8,7 +8,7 @@ import BingoHeadCountModal from './BingoHeadCountModal/BingoHeadCountModal';
 import BingoSizeModal from './BingoSizeModal/BingoSizeModal';
 import useBingoInfoStore from '../../../stores/bingoInfoStore';
 
-function BingoSettingModalOverlay({ setIsModalOpen }) {
+function BingoSettingModalOverlay({ setIsLoading, setIsModalOpen }) {
   const [setBingoName, setBingoHeadCount, setBingoSize] = useBingoInfoStore(
     useShallow((state) => [
       state.setBingoName,
@@ -42,13 +42,17 @@ function BingoSettingModalOverlay({ setIsModalOpen }) {
         <BingoHeadCountModal setModalType={setModalType} />
       )}
       {modalType === 'bingoSize' && (
-        <BingoSizeModal setModalType={setModalType} />
+        <BingoSizeModal
+          setIsLoading={setIsLoading}
+          setModalType={setModalType}
+        />
       )}
     </div>
   );
 }
 
 BingoSettingModalOverlay.propTypes = {
+  setIsLoading: PropTypes.func.isRequired,
   setIsModalOpen: PropTypes.func.isRequired,
 };
 
