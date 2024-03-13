@@ -16,6 +16,8 @@ import MemoizedUserBoard from './UserBoard/UserBoard';
 import Spinner from '../../components/Spinner/Spinner';
 import avatarMappingObject from '../../utils/avatarMappingObject';
 import shuffleArray from '../../utils/shuffleArray';
+import getRoomInfo from '../../apis/getRoomInfo';
+import getUsers from '../../apis/getUsers';
 
 function Bingo() {
   const client = useRef({});
@@ -55,6 +57,26 @@ function Bingo() {
       state.setIsStarted,
     ]),
   );
+
+  useEffect(() => {
+    (async () => {
+      const { bingoName, bingoSize, bingoHeadCount, questions } =
+        await getRoomInfo(roomCode);
+      const users = (await getUsers(roomCode)) || [];
+      setBingoName(bingoName);
+      setBingoHeadCount(bingoHeadCount);
+      setBingoSize(bingoSize);
+      setQuestions(shuffleArray(questions));
+      setUsers(users);
+    })();
+  }, [
+    roomCode,
+    setBingoName,
+    setBingoHeadCount,
+    setBingoSize,
+    setQuestions,
+    setUsers,
+  ]);
 
   // 페이지 나가기 전에 확인
   useEffect(() => {
@@ -96,29 +118,6 @@ function Bingo() {
   useEffect(() => {
     // 구독
     const subscribe = () => {
-      client.current.subscribe(`/room/${roomCode}/room`, (data) => {
-        if (!hasInfo) {
-          if (!data.body) {
-            navigate('/inaccess', { replace: true });
-          }
-          const { bingoName, bingoSize, bingoHeadCount, questions } =
-            JSON.parse(data.body);
-
-          setBingoName(bingoName);
-          setBingoHeadCount(bingoHeadCount);
-          setBingoSize(bingoSize);
-          setQuestions(shuffleArray(questions));
-        }
-      });
-
-      client.current.subscribe(`/room/${roomCode}/users`, (data) => {
-        const users = JSON.parse(data.body).users || [];
-        if (!hasInfo) {
-          setUsers(users);
-          setHasInfo(true);
-        }
-      });
-
       client.current.subscribe(`/room/${roomCode}/avatar`, (data) => {
         const { selectedAvatars } = JSON.parse(data.body);
         setUserAvatar(selectedAvatars);
@@ -207,7 +206,6 @@ function Bingo() {
     // 연결 끊기
     return () => client.current.deactivate();
   }, [
-    hasInfo,
     roomCode,
     setBingoName,
     setBingoHeadCount,
