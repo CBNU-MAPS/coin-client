@@ -4,13 +4,19 @@ import Button from '../../components/Button/Button';
 import BingoSettingModalOverlay from './BingoSettingModal/BingoSettingModalOverlay';
 import CoinIcon from '../../Icons/CoinIcon';
 import style from './Home.module.scss';
+import Spinner from '../../components/Spinner/Spinner';
 
 function Home() {
+  const [isLoading, setIsLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => {
     setIsModalOpen(true);
   };
+
+  if (isLoading) {
+    return <Spinner text="빙고 생성중" />;
+  }
 
   return (
     <div className={`${style.container}`}>
@@ -24,7 +30,10 @@ function Home() {
       </div>
       <Button text="빙고 생성하기" handleClick={openModal} />
       {isModalOpen && (
-        <BingoSettingModalOverlay setIsModalOpen={setIsModalOpen} />
+        <BingoSettingModalOverlay
+          setIsLoading={setIsLoading}
+          setIsModalOpen={setIsModalOpen}
+        />
       )}
     </div>
   );

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, Suspense } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 // eslint-disable-next-line import/no-unresolved
 import { Client } from '@stomp/stompjs';
@@ -16,6 +16,8 @@ import MemoizedUserBoard from './UserBoard/UserBoard';
 import Spinner from '../../components/Spinner/Spinner';
 import avatarMappingObject from '../../utils/avatarMappingObject';
 import shuffleArray from '../../utils/shuffleArray';
+import getRoomInfo from '../../apis/getRoomInfo';
+import getUsers from '../../apis/getUsers';
 
 function Bingo() {
   const client = useRef({});
@@ -29,8 +31,8 @@ function Bingo() {
   const audio = new Audio('/sounds/selectBingo.mp3');
 
   const [isModalOpen, setIsModalOpen] = useState(true);
-  const [hasInfo, setHasInfo] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isGameLoading, setIsGameLoading] = useState(false);
 
   const setQuestions = useQuestionStore((state) => state.setQuestions);
   const setUserAvatar = useUserAvatarStore((state) => state.setUserAvatar);
@@ -55,6 +57,29 @@ function Bingo() {
       state.setIsStarted,
     ]),
   );
+
+  useEffect(() => {
+    (async () => {
+      const { bingoName, bingoSize, bingoHeadCount, questions } =
+        await getRoomInfo(roomCode);
+      const users = (await getUsers(roomCode)) || [];
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 1000);
+      setBingoName(bingoName);
+      setBingoHeadCount(bingoHeadCount);
+      setBingoSize(bingoSize);
+      setQuestions(shuffleArray(questions));
+      setUsers(users);
+    })();
+  }, [
+    roomCode,
+    setBingoName,
+    setBingoHeadCount,
+    setBingoSize,
+    setQuestions,
+    setUsers,
+  ]);
 
   // 페이지 나가기 전에 확인
   useEffect(() => {
@@ -96,29 +121,6 @@ function Bingo() {
   useEffect(() => {
     // 구독
     const subscribe = () => {
-      client.current.subscribe(`/room/${roomCode}/room`, (data) => {
-        if (!hasInfo) {
-          if (!data.body) {
-            navigate('/inaccess', { replace: true });
-          }
-          const { bingoName, bingoSize, bingoHeadCount, questions } =
-            JSON.parse(data.body);
-
-          setBingoName(bingoName);
-          setBingoHeadCount(bingoHeadCount);
-          setBingoSize(bingoSize);
-          setQuestions(shuffleArray(questions));
-        }
-      });
-
-      client.current.subscribe(`/room/${roomCode}/users`, (data) => {
-        const users = JSON.parse(data.body).users || [];
-        if (!hasInfo) {
-          setUsers(users);
-          setHasInfo(true);
-        }
-      });
-
       client.current.subscribe(`/room/${roomCode}/avatar`, (data) => {
         const { selectedAvatars } = JSON.parse(data.body);
         setUserAvatar(selectedAvatars);
@@ -165,9 +167,9 @@ function Bingo() {
           }
         });
         setUsers(users);
-        setIsLoading(true);
+        setIsGameLoading(true);
         setTimeout(() => {
-          setIsLoading(false);
+          setIsGameLoading(false);
         }, 2000);
       });
 
@@ -207,7 +209,6 @@ function Bingo() {
     // 연결 끊기
     return () => client.current.deactivate();
   }, [
-    hasInfo,
     roomCode,
     setBingoName,
     setBingoHeadCount,
@@ -219,9 +220,13 @@ function Bingo() {
     navigate,
   ]);
 
+  if (isLoading) {
+    return <Spinner text="빙고 생성중" />;
+  }
+
   return (
     <div>
-      {isLoading ? (
+      {isGameLoading ? (
         <Spinner text="게임 준비중" />
       ) : (
         <div className={style.container}>

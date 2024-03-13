@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useShallow } from 'zustand/react/shallow';
 import PropTypes from 'prop-types';
@@ -10,8 +10,9 @@ import PlusIcon from '../../../../Icons/PlusIcon';
 import MinusIcon from '../../../../Icons/MinusIcon';
 import useBingoInfoStore from '../../../../stores/bingoInfoStore';
 import createRoom from '../../../../apis/createRoom';
+import Spinner from '../../../../components/Spinner/Spinner';
 
-function BingoSizeModal({ setModalType }) {
+function BingoSizeModal({ setIsLoading, setModalType }) {
   const navigate = useNavigate();
 
   const [bingoName, bingoHeadCount, bingoSize, setBingoSize] =
@@ -51,6 +52,7 @@ function BingoSizeModal({ setModalType }) {
       size: bingoSize,
     };
 
+    setIsLoading(true);
     const roomCode = await createRoom(bingoInfo);
     navigate(`/bingo/${roomCode}`, { replace: true });
   };
@@ -89,6 +91,7 @@ function BingoSizeModal({ setModalType }) {
 }
 
 BingoSizeModal.propTypes = {
+  setIsLoading: PropTypes.func.isRequired,
   setModalType: PropTypes.func.isRequired,
 };
 
