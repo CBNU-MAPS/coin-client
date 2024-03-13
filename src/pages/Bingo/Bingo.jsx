@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, Suspense } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 // eslint-disable-next-line import/no-unresolved
 import { Client } from '@stomp/stompjs';
@@ -31,8 +31,8 @@ function Bingo() {
   const audio = new Audio('/sounds/selectBingo.mp3');
 
   const [isModalOpen, setIsModalOpen] = useState(true);
-  const [hasInfo, setHasInfo] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isGameLoading, setIsGameLoading] = useState(false);
 
   const setQuestions = useQuestionStore((state) => state.setQuestions);
   const setUserAvatar = useUserAvatarStore((state) => state.setUserAvatar);
@@ -63,6 +63,9 @@ function Bingo() {
       const { bingoName, bingoSize, bingoHeadCount, questions } =
         await getRoomInfo(roomCode);
       const users = (await getUsers(roomCode)) || [];
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 1000);
       setBingoName(bingoName);
       setBingoHeadCount(bingoHeadCount);
       setBingoSize(bingoSize);
@@ -164,9 +167,9 @@ function Bingo() {
           }
         });
         setUsers(users);
-        setIsLoading(true);
+        setIsGameLoading(true);
         setTimeout(() => {
-          setIsLoading(false);
+          setIsGameLoading(false);
         }, 2000);
       });
 
@@ -217,9 +220,13 @@ function Bingo() {
     navigate,
   ]);
 
+  if (isLoading) {
+    return <Spinner text="로딩중" />;
+  }
+
   return (
     <div>
-      {isLoading ? (
+      {isGameLoading ? (
         <Spinner text="게임 준비중" />
       ) : (
         <div className={style.container}>
